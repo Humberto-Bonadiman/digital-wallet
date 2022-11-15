@@ -30,6 +30,7 @@ var express = __importStar(require("express"));
 var userController_1 = __importDefault(require("../controllers/userController"));
 var userRouter = express.Router();
 userRouter
+    .post('/login', new userController_1["default"]().login)
     .post('/', new userController_1["default"]().create);
 exports["default"] = userRouter;
 //# sourceMappingURL=userRoutes.js.map

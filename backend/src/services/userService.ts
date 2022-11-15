@@ -1,5 +1,6 @@
+import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-// import { sign } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { usersInterface } from '../interfaces/usersInterface';
 import AccountsService from './accountService';
@@ -23,6 +24,26 @@ class UsersService {
       username: (await userCreated).username,
       accountId: (await userCreated).accountId
     };
+  }
+
+  public async login(username: string) {
+    const prisma = new PrismaClient();
+    const expiresIn = '7d';
+    const algorithm = 'HS256';
+    const findUniqueUser = await prisma.users.findUnique({
+      where: {
+        username
+      },
+      select: {
+        id: true,
+        username: true,
+        accountId: true
+      }
+    });
+    const SECRET = process.env.JWT_SECRET || "SECRET";
+    const token = sign({ data: findUniqueUser }, SECRET, { expiresIn, algorithm });
+
+    return token;
   }
 }
 

@@ -56,10 +56,31 @@ var UserController = /** @class */ (function () {
                         return [4 /*yield*/, userService.create({ username: username, password: password })];
                     case 1:
                         createUser = _b.sent();
-                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json(createUser)];
+                        return [2 /*return*/, res.status(StatusCode_1["default"].CREATED).json(createUser)];
                     case 2:
                         error_1 = _b.sent();
                         return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_1)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.login = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var username, userService, loginUser, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        username = req.body.username;
+                        userService = new userService_1["default"]();
+                        return [4 /*yield*/, userService.login(username)];
+                    case 1:
+                        loginUser = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json('token: ' + loginUser)];
+                    case 2:
+                        error_2 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_2)];
                     case 3: return [2 /*return*/];
                 }
             });

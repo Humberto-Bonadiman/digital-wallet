@@ -39,8 +39,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
+require("dotenv/config");
 var client_1 = require("@prisma/client");
-// import { sign } from 'jsonwebtoken';
+var jsonwebtoken_1 = require("jsonwebtoken");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var accountService_1 = __importDefault(require("./accountService"));
 var UsersService = /** @class */ (function () {
@@ -48,7 +49,7 @@ var UsersService = /** @class */ (function () {
     }
     UsersService.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var username, password, prisma, account, accountId, passwordHash, userCreated, created;
+            var username, password, prisma, account, accountId, passwordHash, userCreated;
             var _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -70,12 +71,41 @@ var UsersService = /** @class */ (function () {
                         _a = {};
                         return [4 /*yield*/, userCreated];
                     case 2:
-                        _a.username = (_b.sent()).username;
+                        _a.id = (_b.sent()).id;
                         return [4 /*yield*/, userCreated];
                     case 3:
-                        created = (_a.accountId = (_b.sent()).accountId,
-                            _a);
-                        return [2 /*return*/, created];
+                        _a.username = (_b.sent()).username;
+                        return [4 /*yield*/, userCreated];
+                    case 4: return [2 /*return*/, (_a.accountId = (_b.sent()).accountId,
+                            _a)];
+                }
+            });
+        });
+    };
+    UsersService.prototype.login = function (username) {
+        return __awaiter(this, void 0, void 0, function () {
+            var prisma, expiresIn, algorithm, findUniqueUser, SECRET, token;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        prisma = new client_1.PrismaClient();
+                        expiresIn = '7d';
+                        algorithm = 'HS256';
+                        return [4 /*yield*/, prisma.users.findUnique({
+                                where: {
+                                    username: username
+                                },
+                                select: {
+                                    id: true,
+                                    username: true,
+                                    accountId: true
+                                }
+                            })];
+                    case 1:
+                        findUniqueUser = _a.sent();
+                        SECRET = process.env.JWT_SECRET || "SECRET";
+                        token = (0, jsonwebtoken_1.sign)({ data: findUniqueUser }, SECRET, { expiresIn: expiresIn, algorithm: algorithm });
+                        return [2 /*return*/, token];
                 }
             });
         });

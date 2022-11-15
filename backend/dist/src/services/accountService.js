@@ -6,7 +6,7 @@ var AccountsService = /** @class */ (function () {
     }
     AccountsService.prototype.create = function () {
         var prisma = new client_1.PrismaClient();
-        var initialBalance = 100.0;
+        var initialBalance = 100.00;
         var createAccount = prisma.accounts.create({
             data: { balance: initialBalance }
         });
