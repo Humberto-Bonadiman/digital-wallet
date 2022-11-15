@@ -6,13 +6,12 @@ var AccountsService = /** @class */ (function () {
     }
     AccountsService.prototype.create = function () {
         var prisma = new client_1.PrismaClient();
-        var balance = AccountsService.initialBalance;
+        var initialBalance = 100.0;
         var createAccount = prisma.accounts.create({
-            data: { balance: balance }
+            data: { balance: initialBalance }
         });
         return createAccount;
     };
-    AccountsService.initialBalance = 100.0;
     return AccountsService;
 }());
 exports["default"] = AccountsService;

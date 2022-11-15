@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var client_1 = require("@prisma/client");
+// import { sign } from 'jsonwebtoken';
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var accountService_1 = __importDefault(require("./accountService"));
 var UsersService = /** @class */ (function () {
@@ -47,16 +48,17 @@ var UsersService = /** @class */ (function () {
     }
     UsersService.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var username, password, prisma, account, accountId, passwordHash, userCreated;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var username, password, prisma, account, accountId, passwordHash, userCreated, created;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         username = user.username, password = user.password;
                         prisma = new client_1.PrismaClient();
-                        account = new accountService_1["default"]();
-                        return [4 /*yield*/, account.create()];
+                        return [4 /*yield*/, new accountService_1["default"]().create()];
                     case 1:
-                        accountId = (_a.sent()).id;
+                        account = _b.sent();
+                        accountId = account.id;
                         passwordHash = bcrypt_1["default"].hashSync(password, 10);
                         userCreated = prisma.users.create({
                             data: {
@@ -65,7 +67,15 @@ var UsersService = /** @class */ (function () {
                                 accountId: accountId
                             }
                         });
-                        return [2 /*return*/, userCreated];
+                        _a = {};
+                        return [4 /*yield*/, userCreated];
+                    case 2:
+                        _a.username = (_b.sent()).username;
+                        return [4 /*yield*/, userCreated];
+                    case 3:
+                        created = (_a.accountId = (_b.sent()).accountId,
+                            _a);
+                        return [2 /*return*/, created];
                 }
             });
         });
