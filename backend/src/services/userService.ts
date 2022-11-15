@@ -28,7 +28,7 @@ class UsersService {
 
   public async login(username: string) {
     const prisma = new PrismaClient();
-    const expiresIn = '7d';
+    const expiresIn = '1d';
     const algorithm = 'HS256';
     const findUniqueUser = await prisma.users.findUnique({
       where: {
@@ -40,7 +40,9 @@ class UsersService {
         accountId: true
       }
     });
-    const SECRET = process.env.JWT_SECRET || "SECRET";
+    const SECRET = process.env.JWT_SECRET || (() => {
+      throw new Error('SECRET not found')
+    })();
     const token = sign({ data: findUniqueUser }, SECRET, { expiresIn, algorithm });
 
     return token;
