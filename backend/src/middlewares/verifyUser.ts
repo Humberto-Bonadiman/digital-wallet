@@ -49,22 +49,34 @@ class ValidateUser {
     next();
   }
 
-  public async verifyHashPassword(req: Request, res: Response, next: NextFunction) {
-    const { password, username } = req.body;
-    const verifyUsername = await new PrismaClient().users.findUnique({
-      where: {
-        username
-      },
-    });
-    if (!verifyUsername) {
-      return res.status(StatusCode.NOT_FOUND).json({ message: '"username" does not match'});
-    }
-    const comparePasswrod = await bcrypt.compare(password, verifyUsername?.password);
-    if (!comparePasswrod) {
-      return res.status(StatusCode.NOT_FOUND).json({ message: '"password" does not match'});
+  public async verifyUser(req: Request, res: Response, next: NextFunction) {
+    const { username } = req.body;
+    const user = await new PrismaClient().users.findUnique({ where: { username }});
+    if (user) {
+      return res.status(StatusCode.CONFLICT).json({ message: 'User already registere' });
     }
 
     next();
+  }
+
+  public async verifyHashPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { password, username } = req.body;
+      const verifyUsername = await new PrismaClient().users.findUniqueOrThrow({
+        where: {
+          username
+        },
+      });
+
+      const comparePasswrod = await bcrypt.compare(password, verifyUsername.password);
+      if (!comparePasswrod) {
+        return res.status(StatusCode.NOT_FOUND).json({ message: '"password" does not match'});
+      }
+  
+      next();
+    } catch (err) {
+      return res.status(StatusCode.NOT_FOUND).json({ message: '"username" does not match'});
+    }
   }
 
   public async tokenValidation(req: Request, res: Response, next: NextFunction) {
@@ -81,17 +93,26 @@ class ValidateUser {
       }
 
       const decoded = verify(token, SECRET) as JwtPayload;
-      console.log(id);
-      console.log(decoded.data.id);
       const user = await new PrismaClient().users.findUnique({ where: { id: decoded.data.id }});
 
       if (!user || decoded.data.id !== Number(id) || user.username !== username) {
-        return res.status(401).json({ message: 'Expired or invalid token' });
+        return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
       }
 
       next();
     } catch (err) {
-      return res.status(401).json({ message: 'Expired or invalid token' });
+      return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+    }
+  }
+
+  public async userValidation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      await new PrismaClient().users.findUniqueOrThrow({ where: { id: Number(id) }});
+
+      next();
+    } catch (err) {
+      return res.status(StatusCode.NOT_FOUND).json({ message: 'User not found' });
     }
   }
 }

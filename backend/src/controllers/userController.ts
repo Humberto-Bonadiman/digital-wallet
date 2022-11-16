@@ -45,6 +45,17 @@ class UserController {
       return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
     }
   }
+
+  public async deleteById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const userService = new UsersService();
+      await userService.deleteById(Number(id));
+      return res.status(StatusCode.NO_CONTENT).end();
+    } catch (error) {
+      return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
 }
 
 export default UserController;

@@ -17,8 +17,18 @@ userRouter
     validateUser.verifyIfEmpty,
     validateUser.validateUsername,
     validateUser.verifyPassword,
+    validateUser.verifyUser,
     userController.create
   ).get('/', userController.findAll)
-  .patch('/:id', validateUser.tokenValidation, userController.updateUserPassword);
+  .patch(
+    '/:id',
+    validateUser.tokenValidation,
+    userController.updateUserPassword
+  ).delete(
+    '/:id',
+    validateUser.userValidation,
+    validateUser.tokenValidation,
+    userController.deleteById
+  );
 
 export default userRouter;
