@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -89,7 +89,7 @@ var UsersService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         prisma = new client_1.PrismaClient();
-                        expiresIn = '7d';
+                        expiresIn = '1d';
                         algorithm = 'HS256';
                         return [4 /*yield*/, prisma.users.findUnique({
                                 where: {
@@ -103,9 +103,32 @@ var UsersService = /** @class */ (function () {
                             })];
                     case 1:
                         findUniqueUser = _a.sent();
-                        SECRET = process.env.JWT_SECRET || "SECRET";
+                        SECRET = process.env.JWT_SECRET || (function () {
+                            throw new Error('SECRET not found');
+                        })();
                         token = (0, jsonwebtoken_1.sign)({ data: findUniqueUser }, SECRET, { expiresIn: expiresIn, algorithm: algorithm });
                         return [2 /*return*/, token];
+                }
+            });
+        });
+    };
+    UsersService.prototype.findAll = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var prisma, findAllUsers;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        prisma = new client_1.PrismaClient();
+                        return [4 /*yield*/, prisma.users.findMany({
+                                select: {
+                                    id: true,
+                                    username: true,
+                                    accountId: true
+                                }
+                            })];
+                    case 1:
+                        findAllUsers = _a.sent();
+                        return [2 /*return*/, findAllUsers];
                 }
             });
         });

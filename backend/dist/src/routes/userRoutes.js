@@ -28,9 +28,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express = __importStar(require("express"));
 var userController_1 = __importDefault(require("../controllers/userController"));
+var verifyUser_1 = __importDefault(require("../middlewares/verifyUser"));
 var userRouter = express.Router();
+var validateUser = new verifyUser_1["default"]();
 userRouter
-    .post('/login', new userController_1["default"]().login)
-    .post('/', new userController_1["default"]().create);
+    .post('/login', validateUser.verifyIfEmpty, validateUser.verifyHashPassword, new userController_1["default"]().login).post('/', validateUser.verifyIfEmpty, validateUser.validateUsername, validateUser.verifyPassword, new userController_1["default"]().create);
 exports["default"] = userRouter;
 //# sourceMappingURL=userRoutes.js.map

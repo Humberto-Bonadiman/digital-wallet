@@ -19,7 +19,28 @@ class UserController {
       const { username } = req.body;
       const userService = new UsersService();
       const loginUser = await userService.login(username);
-      return res.status(StatusCode.OK).json('token: ' + loginUser);
+      return res.status(StatusCode.OK).json({ token: loginUser });
+    } catch (error) {
+      return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
+
+  public async findAll(_req: Request, res: Response) {
+    try {
+      const userService = new UsersService();
+      const findAllUsers = await userService.findAll();
+      return res.status(StatusCode.OK).json(findAllUsers);
+    } catch (error) {
+      return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
+
+  public async updateUserPassword(req: Request, res: Response) {
+    try {
+      const { username, password } = req.body;
+      const userService = new UsersService();
+      await userService.updateUserPassword({ username, password });
+      return res.status(StatusCode.NO_CONTENT).end();
     } catch (error) {
       return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
     }

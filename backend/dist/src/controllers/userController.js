@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -77,10 +77,30 @@ var UserController = /** @class */ (function () {
                         return [4 /*yield*/, userService.login(username)];
                     case 1:
                         loginUser = _a.sent();
-                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json('token: ' + loginUser)];
+                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json({ token: loginUser })];
                     case 2:
                         error_2 = _a.sent();
                         return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_2)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.findAll = function (_req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userService, findAllUsers, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        userService = new userService_1["default"]();
+                        return [4 /*yield*/, userService.findAll()];
+                    case 1:
+                        findAllUsers = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json(findAllUsers)];
+                    case 2:
+                        error_3 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_3)];
                     case 3: return [2 /*return*/];
                 }
             });

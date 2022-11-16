@@ -4,19 +4,21 @@ import ValidateUser from '../middlewares/verifyUser';
 
 const userRouter = express.Router();
 const validateUser = new ValidateUser();
+const userController = new UserController();
 
 userRouter
   .post(
     '/login',
     validateUser.verifyIfEmpty,
     validateUser.verifyHashPassword,
-    new UserController().login
+    userController.login
   ).post(
     '/',
     validateUser.verifyIfEmpty,
     validateUser.validateUsername,
     validateUser.verifyPassword,
-    new UserController().create
-  );
+    userController.create
+  ).get('/', userController.findAll)
+  .patch('/:id', validateUser.tokenValidation, userController.updateUserPassword);
 
 export default userRouter;

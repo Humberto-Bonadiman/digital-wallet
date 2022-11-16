@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { Request, Response, NextFunction } from 'express';
 import StatusCode from '../enums/StatusCode';
 import bcrypt from 'bcrypt';
-// import { verify } from 'jsonwebtoken';
+import { JwtPayload, verify } from 'jsonwebtoken';
 
 class ValidateUser {
   public verifyIfEmpty(req: Request, res: Response, next: NextFunction) {
@@ -65,6 +65,34 @@ class ValidateUser {
     }
 
     next();
+  }
+
+  public async tokenValidation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.headers.authorization;
+      const { id } = req.params;
+      const { username } = req.body;
+
+      const SECRET = process.env.JWT_SECRET || (() => {
+        throw new Error('SECRET not found')
+      })();
+      if (!token) {
+        return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
+      }
+
+      const decoded = verify(token, SECRET) as JwtPayload;
+      console.log(id);
+      console.log(decoded.data.id);
+      const user = await new PrismaClient().users.findUnique({ where: { id: decoded.data.id }});
+
+      if (!user || decoded.data.id !== Number(id) || user.username !== username) {
+        return res.status(401).json({ message: 'Expired or invalid token' });
+      }
+
+      next();
+    } catch (err) {
+      return res.status(401).json({ message: 'Expired or invalid token' });
+    }
   }
 }
 

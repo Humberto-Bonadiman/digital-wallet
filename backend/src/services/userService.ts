@@ -47,6 +47,34 @@ class UsersService {
 
     return token;
   }
+
+  public async findAll() {
+    const prisma = new PrismaClient();
+    const findAllUsers = await prisma.users.findMany({
+      select: {
+        id: true,
+        username: true,
+        accountId: true
+      }
+    });
+
+    return findAllUsers;
+  }
+
+  public async updateUserPassword(user: usersInterface) {
+    const prisma = new PrismaClient();
+    const { username, password } = user;
+    const passwordHash = bcrypt.hashSync(password, 10);
+    const update = await prisma.users.update({
+      where: {
+        username: username
+      },
+      data: {
+        password: passwordHash
+      }
+    });
+    return update;
+  }
 }
 
 export default UsersService;
