@@ -114,8 +114,8 @@ class UsersService {
     try {
       const prisma = new PrismaClient();
       const findUser = await prisma.users.findUniqueOrThrow({ where: { id }});
-      await prisma.accounts.delete({ where: { id: findUser.id }});
       await prisma.users.delete({ where: { id }});
+      await prisma.accounts.delete({ where: { id: findUser.accountId }});
     } catch (err) {
       throw Error;
     }

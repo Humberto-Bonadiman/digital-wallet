@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import swaggerDocument from '../swagger.json';
 import userRouter from './routes/userRoutes';
 import accountRouter from './routes/accountRoutes';
+import transactionRouter from './routes/transactionRoutes';
 
 class App {
   public app;
@@ -35,6 +36,7 @@ class App {
     });
     this.app.use('/users', userRouter);
     this.app.use('/accounts', accountRouter);
+    this.app.use('/transactions', transactionRouter);
     this.app.use(
       '/docs',
       swaggerUi.serve,
