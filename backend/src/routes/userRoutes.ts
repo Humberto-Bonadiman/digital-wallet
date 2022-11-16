@@ -20,8 +20,14 @@ userRouter
     validateUser.verifyUser,
     userController.create
   ).get('/', userController.findAll)
-  .patch(
+  .get(
     '/:id',
+    validateUser.userValidation,
+    validateUser.tokenValidation,
+    userController.findById
+  ).patch(
+    '/:id',
+    validateUser.userValidation,
     validateUser.tokenValidation,
     userController.updateUserPassword
   ).delete(

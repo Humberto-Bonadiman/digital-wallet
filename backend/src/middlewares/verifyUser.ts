@@ -83,7 +83,6 @@ class ValidateUser {
     try {
       const token = req.headers.authorization;
       const { id } = req.params;
-      const { username } = req.body;
 
       const SECRET = process.env.JWT_SECRET || (() => {
         throw new Error('SECRET not found')
@@ -93,9 +92,10 @@ class ValidateUser {
       }
 
       const decoded = verify(token, SECRET) as JwtPayload;
-      const user = await new PrismaClient().users.findUnique({ where: { id: decoded.data.id }});
 
-      if (!user || decoded.data.id !== Number(id) || user.username !== username) {
+      const userToken = await new PrismaClient().users.findUnique({ where: { id: decoded.data.id }});
+
+      if (!userToken || decoded.data.id !== Number(id)) {
         return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
       }
 

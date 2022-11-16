@@ -35,6 +35,17 @@ class UserController {
     }
   }
 
+  public async findById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const userService = new UsersService();
+      const findUserById = await userService.findById(Number(id));
+      return res.status(StatusCode.OK).json(findUserById);
+    } catch (error) {
+      return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
+
   public async updateUserPassword(req: Request, res: Response) {
     try {
       const { username, password } = req.body;

@@ -73,6 +73,24 @@ class UsersService {
     }
   }
 
+  public async findById(id: number) {
+    try {
+      const prisma = new PrismaClient();
+      const findUserById = await prisma.users.findUniqueOrThrow({
+        where: { id },
+        select: {
+          id: true,
+          username: true,
+          accountId: true
+        }
+      });
+  
+      return findUserById;
+    } catch (err) {
+      throw Error;
+    }
+  }
+
   public async updateUserPassword(user: usersInterface) {
     try {
       const prisma = new PrismaClient();
