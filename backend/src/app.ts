@@ -4,6 +4,7 @@ import cors from 'cors';
 import { Request, Response, NextFunction } from 'express';
 import swaggerDocument from '../swagger.json';
 import userRouter from './routes/userRoutes';
+import accountRouter from './routes/accountRoutes';
 
 class App {
   public app;
@@ -33,6 +34,7 @@ class App {
       res.status(200).json({ message: 'Aplicação funcionando' });
     });
     this.app.use('/users', userRouter);
+    this.app.use('/accounts', accountRouter);
     this.app.use(
       '/docs',
       swaggerUi.serve,

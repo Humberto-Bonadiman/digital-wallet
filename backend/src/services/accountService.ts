@@ -9,6 +9,17 @@ class AccountsService {
     });
     return createAccount;
   }
+
+  public async findById(id: number) {
+    try {
+      const findAccountById = await new PrismaClient().accounts.findUniqueOrThrow({
+        where: { id }
+      });
+      return findAccountById;
+    } catch (err) {
+      throw Error;
+    }
+  }
 }
 
 export default AccountsService;
