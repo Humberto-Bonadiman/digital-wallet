@@ -9,11 +9,17 @@ const verifyTransaction = new VerifyTransaction();
 transactionRouter
   .post(
     '/',
-    verifyTransaction.tokenValidation,
+    verifyTransaction.tokenNotFound,
+    verifyTransaction.tokenUsernameValidation,
     verifyTransaction.negativeValue,
     verifyTransaction.usersValidation,
     verifyTransaction.transferOverBalance,
     transactionController.create
+  ).get(
+    '/',
+    verifyTransaction.tokenNotFound,
+    verifyTransaction.tokenIdValidation,
+    transactionController.findAllUserTransactions
   );
 
 export default transactionRouter;

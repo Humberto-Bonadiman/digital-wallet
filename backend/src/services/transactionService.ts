@@ -50,7 +50,7 @@ class TransactionService {
         throw new Error('SECRET not found')
       })();
       const decoded = verify(token, SECRET) as JwtPayload;
-      const findDebitedUser = await new PrismaClient().users.findUniqueOrThrow({
+      const findUser = await new PrismaClient().users.findUniqueOrThrow({
         where: { id: decoded.data.id },
         select: {
           id: true,
@@ -58,6 +58,18 @@ class TransactionService {
           accountId: true
         }
       });
+      const findAccount = await new PrismaClient().accounts.findUniqueOrThrow({
+        where: { id: findUser.accountId }
+      });
+      const findTransactionsByAccountId = await new PrismaClient().transactions.findMany({
+        where: {
+          OR: [
+            { debitedAccountId: findAccount.id },
+            { creditedAccountId: findAccount.id }
+          ]
+        }
+      });
+      return findTransactionsByAccountId;
     } catch (err) {
       throw Error;
     }

@@ -5,23 +5,46 @@ import StatusCode from '../enums/StatusCode';
 import { JwtPayload, verify } from 'jsonwebtoken';
 
 class VerifyTransaction {
-  public async tokenValidation(req: Request, res: Response, next: NextFunction) {
+  public async tokenNotFound(req: Request, res: Response, next: NextFunction) {
+    const token = req.headers.authorization;
+
+    if (!token) {
+      return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
+    }
+
+    next();
+  }
+
+  public async tokenUsernameValidation(req: Request, res: Response, next: NextFunction) {
     try {
-      const token = req.headers.authorization;
+      const token = req.headers.authorization as string;
       const { debitedUsername } = req.body;
 
       const SECRET = process.env.JWT_SECRET || (() => {
         throw new Error('SECRET not found')
       })();
-      if (!token) {
-        return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
-      }
 
       const decoded = verify(token, SECRET) as JwtPayload;
 
       if (decoded.data.username !== debitedUsername) {
         return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
       }
+
+      next();
+    } catch (err) {
+      return res.status(StatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+    }
+  }
+
+  public async tokenIdValidation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.headers.authorization as string;
+
+      const SECRET = process.env.JWT_SECRET || (() => {
+        throw new Error('SECRET not found')
+      })();
+
+      verify(token, SECRET) as JwtPayload;
 
       next();
     } catch (err) {
@@ -47,6 +70,11 @@ class VerifyTransaction {
       if (!debitedUsername || !creditedUsername) {
         return res.status(StatusCode.BAD_REQUEST).json({
           message: '"debitedUsername" and "creditedUsername" are required'
+        });
+      }
+      if (debitedUsername === creditedUsername) {
+        return res.status(StatusCode.BAD_REQUEST).json({
+          message: '"debitedUsername" and "creditedUsername" cannot be equals'
         });
       }
       await new PrismaClient().users.findUniqueOrThrow({
