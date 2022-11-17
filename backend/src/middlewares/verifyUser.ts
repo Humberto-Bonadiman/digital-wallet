@@ -1,4 +1,3 @@
-
 import { PrismaClient } from '@prisma/client';
 import 'dotenv/config';
 import { Request, Response, NextFunction } from 'express';
