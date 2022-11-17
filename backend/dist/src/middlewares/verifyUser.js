@@ -43,7 +43,7 @@ var client_1 = require("@prisma/client");
 require("dotenv/config");
 var StatusCode_1 = __importDefault(require("../enums/StatusCode"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
-// import { verify } from 'jsonwebtoken';
+var jsonwebtoken_1 = require("jsonwebtoken");
 var ValidateUser = /** @class */ (function () {
     function ValidateUser() {
     }
@@ -83,31 +83,105 @@ var ValidateUser = /** @class */ (function () {
         }
         next();
     };
+    ValidateUser.prototype.verifyUser = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var username, user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        username = req.body.username;
+                        return [4 /*yield*/, new client_1.PrismaClient().users.findUnique({ where: { username: username } })];
+                    case 1:
+                        user = _a.sent();
+                        if (user) {
+                            return [2 /*return*/, res.status(StatusCode_1["default"].CONFLICT).json({ message: 'User already registere' })];
+                        }
+                        next();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     ValidateUser.prototype.verifyHashPassword = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, password, username, verifyUsername, comparePasswrod;
+            var _a, password, username, verifyUsername, comparePasswrod, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
+                        _b.trys.push([0, 3, , 4]);
                         _a = req.body, password = _a.password, username = _a.username;
-                        return [4 /*yield*/, new client_1.PrismaClient().users.findUnique({
+                        return [4 /*yield*/, new client_1.PrismaClient().users.findUniqueOrThrow({
                                 where: {
                                     username: username
                                 }
                             })];
                     case 1:
                         verifyUsername = _b.sent();
-                        if (!verifyUsername) {
-                            return [2 /*return*/, res.status(StatusCode_1["default"].NOT_FOUND).json({ message: '"username" does not match' })];
-                        }
-                        return [4 /*yield*/, bcrypt_1["default"].compare(password, verifyUsername === null || verifyUsername === void 0 ? void 0 : verifyUsername.password)];
+                        return [4 /*yield*/, bcrypt_1["default"].compare(password, verifyUsername.password)];
                     case 2:
                         comparePasswrod = _b.sent();
                         if (!comparePasswrod) {
                             return [2 /*return*/, res.status(StatusCode_1["default"].NOT_FOUND).json({ message: '"password" does not match' })];
                         }
                         next();
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _b.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].NOT_FOUND).json({ message: '"username" does not match' })];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ValidateUser.prototype.tokenValidation = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var token, id, SECRET, decoded, userToken, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        token = req.headers.authorization;
+                        id = req.params.id;
+                        SECRET = process.env.JWT_SECRET || (function () {
+                            throw new Error('SECRET not found');
+                        })();
+                        if (!token) {
+                            return [2 /*return*/, res.status(StatusCode_1["default"].UNAUTHORIZED).json({ message: 'Token not found' })];
+                        }
+                        decoded = (0, jsonwebtoken_1.verify)(token, SECRET);
+                        return [4 /*yield*/, new client_1.PrismaClient().users.findUnique({ where: { id: decoded.data.id } })];
+                    case 1:
+                        userToken = _a.sent();
+                        if (!userToken || decoded.data.id !== Number(id)) {
+                            return [2 /*return*/, res.status(StatusCode_1["default"].UNAUTHORIZED).json({ message: 'Expired or invalid token' })];
+                        }
+                        next();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].UNAUTHORIZED).json({ message: 'Expired or invalid token' })];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ValidateUser.prototype.userValidation = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = req.params.id;
+                        return [4 /*yield*/, new client_1.PrismaClient().users.findUniqueOrThrow({ where: { id: Number(id) } })];
+                    case 1:
+                        _a.sent();
+                        next();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_3 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].NOT_FOUND).json({ message: 'User not found' })];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -20,6 +20,12 @@ transactionRouter
     verifyTransaction.tokenNotFound,
     verifyTransaction.tokenIdValidation,
     transactionController.findAllUserTransactions
+  ).get(
+    '/filter',
+    verifyTransaction.tokenNotFound,
+    verifyTransaction.tokenIdValidation,
+    verifyTransaction.dateFormat,
+    transactionController.filterUserTransactions
   );
 
 export default transactionRouter;

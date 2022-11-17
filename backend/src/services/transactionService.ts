@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Transactions } from '@prisma/client';
 import { JwtPayload, verify } from 'jsonwebtoken';
 
 class TransactionService {
@@ -34,11 +34,15 @@ class TransactionService {
       where: { id: findCreditedUser.accountId },
       data: { balance: (Number(findCreditedAccount.balance) + value) }
     });
+    const dateNow = new Date();
+    const formatDate = `${dateNow.getDate()}-${dateNow.getMonth() + 1}-${dateNow.getFullYear()}`;
+
     const createTransaction = await new PrismaClient().transactions.create({
       data: {
         debitedAccountId: findDebitedUser.accountId,
         creditedAccountId: findCreditedUser.accountId,
-        value
+        value,
+        createdAt: formatDate
       }
     });
     return createTransaction;
@@ -70,6 +74,59 @@ class TransactionService {
         }
       });
       return findTransactionsByAccountId;
+    } catch (err) {
+      throw Error;
+    }
+  }
+
+  public async filterUserTransactions(
+    token: string,
+    debited: boolean,
+    credited: boolean,
+    date?: string
+  ) {
+    try {
+      const SECRET = process.env.JWT_SECRET || (() => {
+        throw new Error('SECRET not found')
+      })();
+      const decoded = verify(token, SECRET) as JwtPayload;
+      const findUser = await new PrismaClient().users.findUniqueOrThrow({
+        where: { id: decoded.data.id },
+        select: {
+          id: true,
+          username: true,
+          accountId: true
+        }
+      });
+      const findAccount = await new PrismaClient().accounts.findUniqueOrThrow({
+        where: { id: findUser.accountId }
+      });
+
+      let debitedTrue: Transactions[] = [];
+      let creditedTrue: Transactions[] = [];
+
+      if (debited === true) {
+        debitedTrue = await new PrismaClient().transactions.findMany({
+          where: {
+            debitedAccountId: findAccount.id,
+            createdAt: date,
+          }
+        });
+        // console.log(debitedTrue);
+      }
+
+      if (credited === true) {
+        creditedTrue = await new PrismaClient().transactions.findMany({
+          where: {
+            creditedAccountId: findAccount.id,
+            createdAt: date
+          }
+        });
+        // console.log(creditedTrue);
+      }
+
+      return [...debitedTrue, ...creditedTrue];
+
     } catch (err) {
       throw Error;
     }

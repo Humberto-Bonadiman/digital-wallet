@@ -28,6 +28,22 @@ class TransactionController {
       return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
     }
   }
+
+  public async filterUserTransactions(req: Request, res: Response) {
+    try {
+      const { authorization } = req.headers;
+      const { debited, credited, date } = req.body;
+      if (typeof authorization === 'string') {
+        const transactionService = new TransactionService();
+        const filterUser = await transactionService
+          .filterUserTransactions(authorization, debited, credited, date);
+        return res.status(StatusCode.OK).json(filterUser);
+      }
+      throw Error;
+    } catch (error) {
+      return res.status(StatusCode.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
 }
 
 export default TransactionController;

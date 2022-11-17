@@ -109,7 +109,28 @@ class VerifyTransaction {
     } catch (err) {
       return res.status(StatusCode.NOT_FOUND).json({ message: 'Account not found' });
     }
+  }
 
+  public async dateFormat(req: Request, res: Response, next: NextFunction) {
+    const { date } = req.body;
+    if (date) {
+      if (date.length !== 10) {
+        return res.status(StatusCode.BAD_REQUEST)
+          .json({ message: '"date" must be in dd-mm-yyyy format'});
+      }
+      if (!(date.indexOf('-') === 2)
+        || !(date.indexOf('-', 3) === 5)) {
+        return res.status(StatusCode.BAD_REQUEST)
+          .json({ message: '"date" must be in dd-mm-yyyy format'});
+      }
+      const dateReplace = date.replaceAll('-', '');
+      if (isNaN(dateReplace)) {
+        return res.status(StatusCode.BAD_REQUEST)
+          .json({ message: '"date" is in wrong format' });
+      }
+    }
+
+    next();
   }
 }
 

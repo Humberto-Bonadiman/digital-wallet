@@ -11,7 +11,7 @@ CREATE TABLE "Users" (
 -- CreateTable
 CREATE TABLE "Accounts" (
     "id" SERIAL NOT NULL,
-    "balance" DECIMAL(65,30) NOT NULL,
+    "balance" DECIMAL(10,2) NOT NULL,
 
     CONSTRAINT "Accounts_pkey" PRIMARY KEY ("id")
 );
@@ -21,8 +21,8 @@ CREATE TABLE "Transactions" (
     "id" SERIAL NOT NULL,
     "debitedAccountId" INTEGER NOT NULL,
     "creditedAccountId" INTEGER NOT NULL,
-    "value" DECIMAL(65,30) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "value" DECIMAL(10,2) NOT NULL,
+    "createdAt" TEXT NOT NULL,
 
     CONSTRAINT "Transactions_pkey" PRIMARY KEY ("id")
 );

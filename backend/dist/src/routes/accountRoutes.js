@@ -27,13 +27,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express = __importStar(require("express"));
-var userController_1 = __importDefault(require("../controllers/userController"));
-var verifyUser_1 = __importDefault(require("../middlewares/verifyUser"));
-var userRouter = express.Router();
-var validateUser = new verifyUser_1["default"]();
-var userController = new userController_1["default"]();
-userRouter
-    .post('/login', validateUser.verifyIfEmpty, validateUser.verifyHashPassword, userController.login).post('/', validateUser.verifyIfEmpty, validateUser.validateUsername, validateUser.verifyPassword, validateUser.verifyUser, userController.create).get('/', userController.findAll)
-    .get('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.findById).patch('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.updateUserPassword)["delete"]('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.deleteById);
-exports["default"] = userRouter;
-//# sourceMappingURL=userRoutes.js.map
+var accountController_1 = __importDefault(require("../controllers/accountController"));
+var verifyAccount_1 = __importDefault(require("../middlewares/verifyAccount"));
+var accountRouter = express.Router();
+var accountController = new accountController_1["default"]();
+var validateAccount = new verifyAccount_1["default"]();
+accountRouter
+    .get('/:id', validateAccount.tokenValidation, validateAccount.accountValidation, accountController.findById);
+exports["default"] = accountRouter;
+//# sourceMappingURL=accountRoutes.js.map

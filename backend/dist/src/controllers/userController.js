@@ -106,6 +106,69 @@ var UserController = /** @class */ (function () {
             });
         });
     };
+    UserController.prototype.findById = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, userService, findUserById, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = req.params.id;
+                        userService = new userService_1["default"]();
+                        return [4 /*yield*/, userService.findById(Number(id))];
+                    case 1:
+                        findUserById = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json(findUserById)];
+                    case 2:
+                        error_4 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_4)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.updateUserPassword = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, username, password, userService, error_5;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, username = _a.username, password = _a.password;
+                        userService = new userService_1["default"]();
+                        return [4 /*yield*/, userService.updateUserPassword({ username: username, password: password })];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].NO_CONTENT).end()];
+                    case 2:
+                        error_5 = _b.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_5)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.deleteById = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, userService, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = req.params.id;
+                        userService = new userService_1["default"]();
+                        return [4 /*yield*/, userService.deleteById(Number(id))];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].NO_CONTENT).end()];
+                    case 2:
+                        error_6 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_6)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return UserController;
 }());
 exports["default"] = UserController;

@@ -27,13 +27,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express = __importStar(require("express"));
-var userController_1 = __importDefault(require("../controllers/userController"));
-var verifyUser_1 = __importDefault(require("../middlewares/verifyUser"));
-var userRouter = express.Router();
-var validateUser = new verifyUser_1["default"]();
-var userController = new userController_1["default"]();
-userRouter
-    .post('/login', validateUser.verifyIfEmpty, validateUser.verifyHashPassword, userController.login).post('/', validateUser.verifyIfEmpty, validateUser.validateUsername, validateUser.verifyPassword, validateUser.verifyUser, userController.create).get('/', userController.findAll)
-    .get('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.findById).patch('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.updateUserPassword)["delete"]('/:id', validateUser.userValidation, validateUser.tokenValidation, userController.deleteById);
-exports["default"] = userRouter;
-//# sourceMappingURL=userRoutes.js.map
+var transactionController_1 = __importDefault(require("../controllers/transactionController"));
+var verifyTransaction_1 = __importDefault(require("../middlewares/verifyTransaction"));
+var transactionRouter = express.Router();
+var transactionController = new transactionController_1["default"]();
+var verifyTransaction = new verifyTransaction_1["default"]();
+transactionRouter
+    .post('/', verifyTransaction.tokenNotFound, verifyTransaction.tokenUsernameValidation, verifyTransaction.negativeValue, verifyTransaction.usersValidation, verifyTransaction.transferOverBalance, transactionController.create).get('/', verifyTransaction.tokenNotFound, verifyTransaction.tokenIdValidation, transactionController.findAllUserTransactions).get('/filter', verifyTransaction.tokenNotFound, verifyTransaction.tokenIdValidation, transactionController.filterUserTransactions);
+exports["default"] = transactionRouter;
+//# sourceMappingURL=transactionRoutes.js.map

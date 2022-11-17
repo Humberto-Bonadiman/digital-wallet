@@ -33,5 +33,5 @@ model Transactions {
   debitedAccountId Int
   creditedAccountId Int
   value Decimal @db.Decimal(10, 2)
-  createdAt DateTime @default(now())
+  createdAt String
 }

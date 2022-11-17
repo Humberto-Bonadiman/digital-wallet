@@ -35,41 +35,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-var client_1 = require("@prisma/client");
-var AccountsService = /** @class */ (function () {
-    function AccountsService() {
+var StatusCode_1 = __importDefault(require("../enums/StatusCode"));
+var accountService_1 = __importDefault(require("../services/accountService"));
+var AccountController = /** @class */ (function () {
+    function AccountController() {
     }
-    AccountsService.prototype.create = function () {
-        var prisma = new client_1.PrismaClient();
-        var initialBalance = 100.00;
-        var createAccount = prisma.accounts.create({
-            data: { balance: initialBalance }
-        });
-        return createAccount;
-    };
-    AccountsService.prototype.findById = function (id) {
+    AccountController.prototype.findById = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var findAccountById, err_1;
+            var id, accountService, findAccountById, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, new client_1.PrismaClient().accounts.findUniqueOrThrow({
-                                where: { id: id }
-                            })];
+                        id = req.params.id;
+                        accountService = new accountService_1["default"]();
+                        return [4 /*yield*/, accountService.findById(Number(id))];
                     case 1:
                         findAccountById = _a.sent();
-                        return [2 /*return*/, findAccountById];
+                        return [2 /*return*/, res.status(StatusCode_1["default"].OK).json(findAccountById)];
                     case 2:
-                        err_1 = _a.sent();
-                        throw Error;
+                        error_1 = _a.sent();
+                        return [2 /*return*/, res.status(StatusCode_1["default"].INTERNAL_SERVER_ERROR).json(error_1)];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return AccountsService;
+    return AccountController;
 }());
-exports["default"] = AccountsService;
-//# sourceMappingURL=accountService.js.map
+exports["default"] = AccountController;
+//# sourceMappingURL=accountController.js.map
