@@ -14,7 +14,7 @@ describe('13- Create a new user by service', () => {
     before(() => {
       create = sinon
         .stub(prisma.users, 'create')
-        .resolves(user.createdUser);
+        .resolves(user.createdUserService);
     });
 
     after(() => {
@@ -22,13 +22,13 @@ describe('13- Create a new user by service', () => {
     });
 
     it('returns an object with the correct data', async () => {
-      const response = await usersService.create(user.newUser);
+      const response = await usersService.create(user.newUserService);
 
       expect(response).to.be.an('object');
       expect(response).to.have.a.property('id');
       expect(response).to.have.a.property('username');
       expect(response).to.have.a.property('accountId');
-      expect(response.username).to.be.equal('username_for_test@email.com');
+      expect(response.username).to.be.equal('username_for_test2@email.com');
 
       await prisma.users.delete({ where: { username: response.username }});
       await prisma.accounts.delete({ where: { id: response.accountId }});

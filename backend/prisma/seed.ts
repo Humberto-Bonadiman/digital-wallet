@@ -122,6 +122,32 @@ async function main() {
     },
   });
 
+  await prisma.accounts.upsert({
+    where: { id: 6 },
+    update: {
+      balance: 100.00
+    },
+    create: {
+      id: 6,
+      balance: 100.00
+    },
+  });
+
+  await prisma.users.upsert({
+    where: { id: 6 },
+    update: {
+      username: 'dragon@prisma.io',
+      password: passwordHashBob,
+      accountId: 6
+    },
+    create: {
+      id: 6,
+      username: 'dragon@prisma.io',
+      password: passwordHashBob,
+      accountId: 6
+    },
+  });
+
   await prisma.transactions.upsert({
     where: { id: 1 },
     update: {

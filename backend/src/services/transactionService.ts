@@ -112,7 +112,6 @@ class TransactionService {
             createdAt: date,
           }
         });
-        // console.log(debitedTrue);
       }
 
       if (credited === true) {
@@ -122,7 +121,6 @@ class TransactionService {
             createdAt: date
           }
         });
-        // console.log(creditedTrue);
       }
 
       return [...debitedTrue, ...creditedTrue];

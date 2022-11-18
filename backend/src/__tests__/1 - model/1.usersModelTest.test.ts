@@ -34,7 +34,7 @@ describe('1 - Create a new User by model', () => {
         expect(response).to.have.a.property('id');
         expect(response).to.have.a.property('username');
         expect(response).to.have.a.property('accountId');
-        expect(response.username).to.be.equal('username_for_test@email.com');
+        expect(response.username).to.be.equal('username_for_test1@email.com');
 
         await prisma.users.delete({ where: { username: response.username }});
         await prisma.accounts.delete({ where: { id: createAccount.id }});
