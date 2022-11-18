@@ -8,10 +8,11 @@
   },
   "scripts": {
     "test": "npx prisma db seed && mocha -r ts-node/register src/__tests__/**/*.test.ts --exit -t 60000",
-    "dev": "npx ts-node src/index.ts",
+    "start": "npx ts-node src/index.ts",
+    "migrate": "npx prisma migrate dev --name init",
     "build": "tsc",
     "seed": "npx prisma db seed",
-    "start": "node ./dist/src/index.js",
+    "dev": "node ./dist/src/index.js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "repository": {
