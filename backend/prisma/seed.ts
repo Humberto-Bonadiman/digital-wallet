@@ -155,6 +155,23 @@ async function main() {
       createdAt: '31-05-2022'
     }
   });
+
+  await prisma.transactions.upsert({
+    where: { id: 3 },
+    update: {
+      debitedAccountId: 3,
+      creditedAccountId: 1,
+      value: 5.00,
+      createdAt: '31-05-2022'
+    },
+    create: {
+      id: 3,
+      debitedAccountId: 3,
+      creditedAccountId: 1,
+      value: 5.00,
+      createdAt: '31-05-2022'
+    }
+  });
 }
 
 main()
