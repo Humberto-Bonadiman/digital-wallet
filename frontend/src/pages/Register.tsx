@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
+import { fetchCreateUser } from '../services/fetchApi';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -18,16 +19,16 @@ const Register = () => {
 
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    /* const result = await fetchApiRegister(email, name, password);
+    const result = await fetchCreateUser(username, password);
     const ERROR = 401;
     if (result.status === ERROR) {
       setError(true);
     }
-    const STATUS_CODE_OK = 200;
-    if (result.status === STATUS_CODE_OK) {
+    const STATUS_CODE_CREATED = 201;
+    if (result.status === STATUS_CODE_CREATED) {
       setError(false);
       navigate('/login');
-    } */
+    }
   };
 
   const MIN_LENGTH_PASSWORD = 5;

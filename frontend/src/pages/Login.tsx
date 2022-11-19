@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Figure, Form, Button, Alert } from 'react-bootstrap';
+import { fetchLogin } from '../services/fetchApi';
 // import Logo from '../images/Logo.jpg';
 
 const Login = () => {
@@ -17,7 +18,7 @@ const Login = () => {
 
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    /* const result = await fetchApi(username, password);
+    const result = await fetchLogin(username, password);
     const ERROR = 401;
     if (result.status === ERROR) {
       setError(true);
@@ -25,15 +26,13 @@ const Login = () => {
     const POST = 200;
     if (result.status === POST) {
       const body = await result.json();
-      setToken(body);
-      setDentist({ email });
-      localStorage.setItem('token', JSON.stringify(body));
-      localStorage.setItem('email', JSON.stringify(email));
-      navigate('/clients');
-    } */
+      localStorage.setItem('token', JSON.stringify(body?.token));
+      localStorage.setItem('username', JSON.stringify(username));
+      navigate('/account');
+    }
   };
 
-  const dentistIsOn = () => {
+  const UserIsOn = () => {
     /* const value = localStorage.getItem('token');
     if (typeof value === 'string') {
       const parse = JSON.parse(value);
@@ -44,7 +43,7 @@ const Login = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(dentistIsOn, []);
+  useEffect(UserIsOn, []);
 
   const MIN_LENGTH = 5;
   const ALERT = (
