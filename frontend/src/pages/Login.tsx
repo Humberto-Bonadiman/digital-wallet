@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Figure, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { fetchLogin } from '../services/fetchApi';
+import { useAppDispatch } from '../app/hooks';
+import { alterToken } from '../features/token/tokenSlice'
 // import Logo from '../images/Logo.jpg';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,13 +36,13 @@ const Login = () => {
   };
 
   const UserIsOn = () => {
-    /* const value = localStorage.getItem('token');
+    const value = localStorage.getItem('token');
     if (typeof value === 'string') {
       const parse = JSON.parse(value);
       if (parse) {
-        setToken(parse);
+        dispatch(alterToken(parse));
       }
-    } */
+    }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
