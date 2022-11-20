@@ -8,6 +8,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const isEmailValid = (userEmail: string) => {
@@ -15,32 +16,50 @@ const Register = () => {
     return regexEmail.test(userEmail);
   };
 
+  const checkError = (message: string) => {
+    const validEmail = '"username" must be a valid email';
+    const validPassword = '"password" must contain at least one number and one uppercase letter';
+    const userRegistered = 'User already registered';
+    if (message === validEmail) {
+      return 'Username precisa ser um e-mail válido!';
+    }
+    if (message === validPassword) {
+      return 'A senha precisa conter pelo menos um número e uma letra maiúscula!';
+    }
+    if (message === userRegistered) {
+      return 'Usuário já registrado!';
+    }
+  }
+
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await fetchCreateUser(username, password);
-    const ERROR = 401;
-    if (result.status === ERROR) {
-      setError(true);
-    }
+    const getResult = await result.json();
     const STATUS_CODE_CREATED = 201;
     if (result.status === STATUS_CODE_CREATED) {
       setError(false);
       navigate('/login');
     }
+    if (result.status !== STATUS_CODE_CREATED) {
+      const messageError = checkError(getResult.message) || '';
+      setMessage(messageError);
+      setError(true);
+    }
   };
 
-  const MIN_LENGTH_PASSWORD = 5;
+  const MIN_LENGTH_PASSWORD = 8;
   const ALERT = (
     <Alert
-      key="danger"
       variant="danger"
-      className="container-sm error text-center mt-3 w-50"
-      data-testid="common_register__element-invalid_register"
-      style={ { maxWidth: '400px', minWidth: '300px' } }
-      onClose={ () => setError(false) }
-      dismissible
+      className="container-sm error text-center mt-1 w-50"
+      data-testid="common_login__element-invalid-username"
     >
-      Este e-mail já está em uso.
+      <p>
+        {message}&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button onClick={ () => setError(false) } variant="outline-danger">
+          X
+        </Button>
+      </p>
     </Alert>
   );
 

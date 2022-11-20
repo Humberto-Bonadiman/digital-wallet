@@ -73,6 +73,24 @@ class UsersService {
     }
   }
 
+  public async findByUsername(username: string) {
+    try {
+      const prisma = new PrismaClient();
+      const findUserByUsername = await prisma.users.findUniqueOrThrow({
+        where: { username },
+        select: {
+          id: true,
+          username: true,
+          accountId: true
+        }
+      });
+  
+      return findUserByUsername;
+    } catch (err) {
+      throw Error;
+    }
+  }
+
   public async findById(id: number) {
     try {
       const prisma = new PrismaClient();

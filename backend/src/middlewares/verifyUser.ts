@@ -52,7 +52,7 @@ class ValidateUser {
     const { username } = req.body;
     const user = await new PrismaClient().users.findUnique({ where: { username }});
     if (user) {
-      return res.status(StatusCode.CONFLICT).json({ message: 'User already registere' });
+      return res.status(StatusCode.CONFLICT).json({ message: 'User already registered' });
     }
 
     next();
@@ -104,10 +104,32 @@ class ValidateUser {
     }
   }
 
+  public async usernameRequired(req: Request, res: Response, next: NextFunction) {
+    const { username } = req.body;
+
+    if (!username) {
+      return res.status(StatusCode.BAD_REQUEST).json({ message: '"username" is required' });
+    }
+
+    next();
+  }
+
   public async userValidation(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       await new PrismaClient().users.findUniqueOrThrow({ where: { id: Number(id) }});
+
+      next();
+    } catch (err) {
+      return res.status(StatusCode.NOT_FOUND).json({ message: 'User not found' });
+    }
+  }
+
+
+  public async userUsernameValidation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username } = req.body;
+      await new PrismaClient().users.findUniqueOrThrow({ where: { username }});
 
       next();
     } catch (err) {

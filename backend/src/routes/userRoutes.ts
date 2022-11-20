@@ -20,7 +20,12 @@ userRouter
     validateUser.verifyUser,
     userController.create
   ).get('/', userController.findAll)
-  .get(
+  .post(
+    '/username',
+    validateUser.usernameRequired,
+    validateUser.userUsernameValidation,
+    userController.findByUsername
+  ).get(
     '/:id',
     validateUser.userValidation,
     validateUser.tokenValidation,

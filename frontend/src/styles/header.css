@@ -1,0 +1,16 @@
+@media screen and (min-width: 992px) {
+  #responsive-navbar-nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .user-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  .me-auto {
+    padding-left: 10%;
+  }
+}
