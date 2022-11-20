@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Figure from 'react-bootstrap/Figure';
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Logo from '../images/digital_wallet.png';
 import { fetchLogin } from '../services/fetchApi';
 import { useAppDispatch } from '../app/hooks';
-import { alterToken } from '../features/token/tokenSlice'
-// import Logo from '../images/Logo.jpg';
+import { alterToken } from '../features/token/tokenSlice';
+import '../styles/login.css'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,13 +27,17 @@ const Login = () => {
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await fetchLogin(username, password);
-    const ERROR = 401;
+    console.log(result);
+    console.log(result.status === 404);
+    const ERROR = 404;
     if (result.status === ERROR) {
       setError(true);
     }
+    console.log(error);
     const POST = 200;
     if (result.status === POST) {
       const body = await result.json();
+      dispatch(alterToken(body?.token));
       localStorage.setItem('token', JSON.stringify(body?.token));
       localStorage.setItem('username', JSON.stringify(username));
       navigate('/account');
@@ -48,31 +57,32 @@ const Login = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(UserIsOn, []);
 
-  const MIN_LENGTH = 5;
+  const MIN_LENGTH = 8;
   const ALERT = (
     <Alert
-      key="danger"
       variant="danger"
-      className="container-sm error text-center mt-3 w-50"
+      className="container-sm error text-center mt-1 w-50"
       data-testid="common_login__element-invalid-username"
-      style={ { maxWidth: '400px', minWidth: '300px' } }
-      onClose={ () => setError(false) }
-      dismissible
     >
-      Username ou senha incorretos.
+      <p>
+        Username ou senha incorretos&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button onClick={() => setError(false)} variant="outline-danger">
+          X
+        </Button>
+      </p>
     </Alert>
   );
 
   return (
-    <Container style={ { marginTop: '20px' } }>
-      {/* <Figure className="container-sm text-center">
+    <Container className="container-form">
+      <Figure className="container-sm text-center">
         <Figure.Image
           width={ 230 }
           alt="Logo"
           src={ Logo }
           className="rounded-3"
         />
-      </Figure> */}
+      </Figure>
       <Form
         className="card mt-3 pb-3 pt-1 container-sm w-50"
         style={ { maxWidth: '400px', minWidth: '300px' } }
@@ -100,16 +110,15 @@ const Login = () => {
           type="submit"
           data-testid="common_login__button-login"
           disabled={ !(isEmailValid(username) && password.length >= MIN_LENGTH) }
-          className="mt-3"
           onClick={ handleClick }
         >
           Entrar
         </Button>
+        <br/>
         <Button
           variant="outline-primary"
           type="submit"
           data-testid="common_login__button-register"
-          className="mt-3"
           onClick={ () => { navigate('/register'); } }
         >
           Ainda não possuo uma conta

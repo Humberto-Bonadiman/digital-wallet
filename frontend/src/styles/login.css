@@ -1,0 +1,17 @@
+.container-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 8px;
+}
+
+.error {
+  border-radius: 8px;
+  max-width: 400px;
+  min-width: 300px;
+}
