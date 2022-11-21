@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-export interface Account {
+export interface AccountInterface {
   id: number;
   balance: number;
 }
 
-const initialState: Account = {
+const initialState: AccountInterface = {
   id: 0,
   balance: 0
 }

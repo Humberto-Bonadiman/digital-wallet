@@ -126,6 +126,14 @@ const Transaction = () => {
         <Button variant="primary" type="submit" onClick={ submit }>
           Realizar transferência
         </Button>
+        <Button
+          variant="outline-primary"
+          type="submit"
+          data-testid="button-account"
+          onClick={ () => { navigate('/account'); } }
+        >
+          Voltar
+        </Button>
       </Form>
       { error && ALERT }
     </Container>

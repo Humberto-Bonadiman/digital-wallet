@@ -48,7 +48,6 @@ export const fetchFindUserByUsername = async (username: string) => {
   });
   
   const response = await fecthFindUser;
-  console.log(response);
   return response;
 }
 
@@ -98,5 +97,28 @@ export const fetchTransaction = async (
     }),
   });
   const response = await transactionFetch;
+  return response;
+}
+
+export const fetchFilterTransactions = async (
+  authorization: string,
+  debited: boolean,
+  credited: boolean,
+  date?: string
+) => {
+  const fetchFilter = fetch(`http://${URL}:${PORT}/transactions/filter`, {
+    method: 'POST',
+    headers: {
+      Accept: appJson,
+      'Content-Type': appJson,
+      Authorization: authorization,
+    },
+    body: JSON.stringify({
+      debited,
+      credited,
+      date
+    }),
+  });
+  const response = await fetchFilter;
   return response;
 }
