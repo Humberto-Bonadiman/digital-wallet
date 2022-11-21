@@ -1,0 +1,49 @@
+.transaction-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.custom-ui {
+  background-color: beige;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  position: fixed;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #888888;
+  margin-left: -185px;
+  width: 370px;
+  top: 20%;
+  left: 50%;
+  z-index: 1;
+}
+
+.custom-ui .btn-primary {
+  margin: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .custom-ui {
+    margin-left: -125px;
+    width: 250px;
+  }
+}

@@ -46,7 +46,9 @@ export const fetchFindUserByUsername = async (username: string) => {
       username,
     }),
   });
+  
   const response = await fecthFindUser;
+  console.log(response);
   return response;
 }
 
@@ -73,5 +75,28 @@ export const fetchAllUserTransactions = async (token: string) => {
     },
   });
   const response = await fecthUserTransactions;
+  return response;
+}
+
+export const fetchTransaction = async (
+  token: string,
+  debitedUsername: string,
+  creditedUsername: string,
+  value: number,
+  ) => {
+  const transactionFetch = fetch(`http://${URL}:${PORT}/transactions`, {
+    method: 'POST',
+    headers: {
+      Accept: appJson,
+      'Content-Type': appJson,
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      debitedUsername,
+      creditedUsername,
+      value,
+    }),
+  });
+  const response = await transactionFetch;
   return response;
 }

@@ -27,8 +27,13 @@ const TableTrasactions = () => {
 
   
   const allTransactions = () => {
-    console.log(transactions);
-    const transactionsUser = transactions.map(({id, createdAt, debitedAccountId, creditedAccountId, value}) => {
+    const transactionsUser = transactions.map(({
+      id,
+      createdAt,
+      debitedAccountId,
+      creditedAccountId,
+      value
+    }) => {
       return(
         <tr key={ id }>
           <td>{id}</td>
