@@ -20,7 +20,7 @@ transactionRouter
     verifyTransaction.tokenNotFound,
     verifyTransaction.tokenIdValidation,
     transactionController.findAllUserTransactions
-  ).get(
+  ).post(
     '/filter',
     verifyTransaction.tokenNotFound,
     verifyTransaction.tokenIdValidation,
