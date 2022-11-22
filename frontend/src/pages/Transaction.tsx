@@ -129,6 +129,7 @@ const Transaction = () => {
         <Button
           variant="outline-primary"
           type="submit"
+          className="button-account"
           data-testid="button-account"
           onClick={ () => { navigate('/account'); } }
         >

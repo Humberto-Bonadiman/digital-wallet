@@ -32,6 +32,5 @@ export const transactionSlice = createSlice({
 export const { alterTransaction } = transactionSlice.actions;
 
 export const selectTransaction = (state: RootState) => state.transaction;
-console.log(selectTransaction);
 
 export default transactionSlice.reducer;

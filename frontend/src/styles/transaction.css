@@ -13,6 +13,10 @@
   justify-content: center;
 }
 
+.button-account {
+  margin-top: 10px;
+}
+
 .error {
   align-items: center;
   display: flex;

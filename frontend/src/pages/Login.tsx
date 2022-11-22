@@ -18,32 +18,15 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
-  // const [message, setMessage] = useState('');
 
   const isEmailValid = (userEmail: string) => {
     const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return regexEmail.test(userEmail);
   };
 
-  /* const checkError = (message: string) => {
-    const validEmail = '"username" must be a valid email';
-    const validPassword = '"password" must contain at least one number and one uppercase letter';
-    const userRegistered = 'User already registered';
-    if (message === validEmail) {
-      return 'Username precisa ser um e-mail válido';
-    }
-    if (message === validPassword) {
-      return 'A senha precisa conter pelo menos um número e uma letra maiúscula';
-    }
-    if (message === userRegistered) {
-      return 'Usuário já registrado';
-    }
-  } */
-
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await fetchLogin(username, password);
-    // const getResult = await result.json();
     const POST = 200;
     if (result.status === POST) {
       const body = await result.json();
@@ -54,8 +37,6 @@ const Login = () => {
     }
     if (result.status !== POST) {
       setError(true);
-      /* const messageError = checkError(getResult.message) || '';
-      setMessage(messageError); */
     }
   };
 

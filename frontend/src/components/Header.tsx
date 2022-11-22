@@ -8,7 +8,6 @@ import '../styles/header.css';
 
 const Header = () => {
   const user = useAppSelector(selectUser);
-  // const dispatch = useAppDispatch();
   const account = useAppSelector(selectAccount);
   const navigate = useNavigate();
   const username = localStorage.getItem('username') || '';
