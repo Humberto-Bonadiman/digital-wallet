@@ -84,7 +84,7 @@ const Login = () => {
         style={ { maxWidth: '400px', minWidth: '300px' } }
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
+          <Form.Label data-testid="common_login__label-username">Username</Form.Label>
           <Form.Control
             type="email"
             placeholder="joao@email.com.br"
@@ -93,7 +93,7 @@ const Login = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Senha</Form.Label>
+          <Form.Label data-testid="common_login__label-password">Senha</Form.Label>
           <Form.Control
             type="password"
             placeholder="**********"

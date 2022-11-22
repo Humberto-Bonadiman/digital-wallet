@@ -1,0 +1,9 @@
+[
+  {
+    "id":2,
+    "debitedAccountId":2,
+    "creditedAccountId":1,
+    "value":"5",
+    "createdAt":"31-05-2022"
+  }
+]
