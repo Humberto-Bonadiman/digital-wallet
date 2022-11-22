@@ -12,6 +12,7 @@
     "migrate": "npx prisma migrate dev --name init",
     "build": "tsc",
     "seed": "npx prisma db seed",
+    "migrate-seed": "npx prisma migrate dev --name init && npx prisma db seed",
     "dev": "node ./dist/src/index.js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },

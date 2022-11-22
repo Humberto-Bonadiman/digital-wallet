@@ -8,6 +8,13 @@ const verifyTransaction = new VerifyTransaction();
 
 transactionRouter
   .post(
+    '/filter',
+    verifyTransaction.tokenNotFound,
+    verifyTransaction.tokenIdValidation,
+    verifyTransaction.dateFormat,
+    transactionController.filterUserTransactions
+  )
+  .post(
     '/',
     verifyTransaction.tokenNotFound,
     verifyTransaction.tokenUsernameValidation,
@@ -20,12 +27,6 @@ transactionRouter
     verifyTransaction.tokenNotFound,
     verifyTransaction.tokenIdValidation,
     transactionController.findAllUserTransactions
-  ).post(
-    '/filter',
-    verifyTransaction.tokenNotFound,
-    verifyTransaction.tokenIdValidation,
-    verifyTransaction.dateFormat,
-    transactionController.filterUserTransactions
   );
 
 export default transactionRouter;

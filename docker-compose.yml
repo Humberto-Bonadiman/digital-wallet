@@ -1,5 +1,15 @@
 version: '3.9'
 services:
+  frontend:
+    build: ./frontend
+    ports: 
+      - 3000:3000
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+      timeout: 10s
+      retries: 5
   backend:
     build:
       context: ./backend

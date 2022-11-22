@@ -13,6 +13,11 @@ userRouter
     validateUser.verifyHashPassword,
     userController.login
   ).post(
+    '/username',
+    validateUser.usernameRequired,
+    validateUser.userUsernameValidation,
+    userController.findByUsername
+  ).post(
     '/',
     validateUser.verifyIfEmpty,
     validateUser.validateUsername,
@@ -20,12 +25,7 @@ userRouter
     validateUser.verifyUser,
     userController.create
   ).get('/', userController.findAll)
-  .post(
-    '/username',
-    validateUser.usernameRequired,
-    validateUser.userUsernameValidation,
-    userController.findByUsername
-  ).get(
+  .get(
     '/:id',
     validateUser.userValidation,
     validateUser.tokenValidation,

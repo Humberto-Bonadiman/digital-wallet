@@ -70,7 +70,7 @@ const Register = () => {
         style={ { maxWidth: '500px', minWidth: '300px' } }
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
+          <Form.Label data-testid="common_register__label-username">Username</Form.Label>
           <Form.Control
             type="email"
             placeholder="email@trybeer.com.br"
@@ -79,7 +79,7 @@ const Register = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Senha</Form.Label>
+          <Form.Label data-testid="common_register__label-password">Senha</Form.Label>
           <Form.Control
             type="password"
             placeholder="**********"

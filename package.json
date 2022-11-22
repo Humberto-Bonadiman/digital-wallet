@@ -1,0 +1,24 @@
+{
+  "name": "digital-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "stop-postgres": "sudo service postgresql stop",
+    "compose:up": "docker-compose up -d --build && cd backend && npm run migrate && npm run seed",
+    "compose:down": "(docker-compose down --remove-orphans)",
+    "install": "cd frontend && npm install && cd .. && cd backend && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Humberto-Bonadiman/digital-wallet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Humberto-Bonadiman/digital-wallet/issues"
+  },
+  "homepage": "https://github.com/Humberto-Bonadiman/digital-wallet#readme"
+}

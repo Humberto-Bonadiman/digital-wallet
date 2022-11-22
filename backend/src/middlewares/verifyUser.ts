@@ -130,7 +130,6 @@ class ValidateUser {
     try {
       const { username } = req.body;
       await new PrismaClient().users.findUniqueOrThrow({ where: { username }});
-
       next();
     } catch (err) {
       return res.status(StatusCode.NOT_FOUND).json({ message: 'User not found' });

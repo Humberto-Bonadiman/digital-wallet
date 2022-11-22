@@ -20,6 +20,7 @@ class UsersService {
           accountId
         }
       });
+      console.log(userCreated);
       return {
         id: (await userCreated).id,
         username: (await userCreated).username,
