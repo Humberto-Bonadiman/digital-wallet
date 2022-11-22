@@ -49,7 +49,7 @@ Caso queira rodar o projeto sem a utilização do Docker, você pode seguir os p
   npm start
 ```
 
-## Erros que você pode encontrar
+## Lidando com erros
 
 1. Caso você possua o PostgreSQL instalado e ativo na sua máquina pode ocorrer o seguinte erro ao rodar o docker:
 ```javascript
@@ -58,7 +58,7 @@ ERROR: Encountered errors while bringing up the project.
 ```
 
 Para isso, você deve utilizar o seguinte comando:
-´´´javascript
+```javascript
   sudo service postgresql stop
 ```
 
