@@ -9,11 +9,11 @@ const reqValueAccount = 'http://localhost:3001/accounts/2';
 describe('Test login page', () => {
   it('if login contains the correct information', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('[data-testid="common_login__label-username"]').should('have.text', 'Username');
-    cy.get('[data-testid="common_login__label-password"]').should('have.text', 'Senha');
-    cy.get('[data-testid="common_login__button-login"]').should('have.text', 'Entrar');
-    cy.get('[data-testid="common_login__button-register"]').should('have.text', 'Ainda não possuo uma conta');
-    cy.get('[data-testid="common_login__button-login"]').should('be.disabled');
+    cy.get('[data-testid="login__label-username"]').should('have.text', 'Username');
+    cy.get('[data-testid="login__label-password"]').should('have.text', 'Senha');
+    cy.get('[data-testid="login__button-login"]').should('have.text', 'Entrar');
+    cy.get('[data-testid="login__button-register"]').should('have.text', 'Ainda não possuo uma conta');
+    cy.get('[data-testid="login__button-login"]').should('be.disabled');
   });
 
   it('should go to "/account" page with correct data', () => {
@@ -22,15 +22,15 @@ describe('Test login page', () => {
         win.localStorage.clear();
       },
     });
-    cy.get('[data-testid="common_login__input-username"]').type('bob@prisma.io');
-    cy.get('[data-testid="common_login__input-password"]').type('Abcdefg1');
+    cy.get('[data-testid="login__input-username"]').type('bob@prisma.io');
+    cy.get('[data-testid="login__input-password"]').type('Abcdefg1');
     
     cy.fixture('login').then(function(login) {
       cy.intercept('POST', reqValueLogin, {
         statusCode: 200,
         body: login
       }).as('login');
-      cy.get('[data-testid="common_login__button-login"]').click();
+      cy.get('[data-testid="login__button-login"]').click();
       cy.url().should('include', 'http://localhost:3000/account');
     });
     cy.fixture('username').then(function(username) {
@@ -60,7 +60,7 @@ describe('Test login page', () => {
 
   it('should go to "/register" page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('[data-testid="common_login__button-register"]').click();
+    cy.get('[data-testid="login__button-register"]').click();
     cy.url().should('include', 'http://localhost:3000/register');
   });
 })

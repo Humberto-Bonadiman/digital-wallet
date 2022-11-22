@@ -52,7 +52,7 @@ const Register = () => {
     <Alert
       variant="danger"
       className="container-sm error text-center mt-1 w-50"
-      data-testid="common_login__element-invalid-username"
+      data-testid="register__alert"
     >
       <p>
         {message}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -70,27 +70,27 @@ const Register = () => {
         style={ { maxWidth: '500px', minWidth: '300px' } }
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label data-testid="common_register__label-username">Username</Form.Label>
+          <Form.Label data-testid="register__label-username">Username</Form.Label>
           <Form.Control
             type="email"
             placeholder="email@trybeer.com.br"
-            data-testid="common_register__input-username"
+            data-testid="register__input-username"
             onChange={ ({ target }) => setUsername(target.value) }
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label data-testid="common_register__label-password">Senha</Form.Label>
+          <Form.Label data-testid="register__label-password">Senha</Form.Label>
           <Form.Control
             type="password"
             placeholder="**********"
-            data-testid="common_register__input-password"
+            data-testid="register__input-password"
             onChange={ ({ target }) => setPassword(target.value) }
           />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          data-testid="common_register__button-register"
+          data-testid="register__button-register"
           disabled={
             !(isEmailValid(username)
             && password.length >= MIN_LENGTH_PASSWORD)
@@ -103,7 +103,7 @@ const Register = () => {
       </Form>
       <p className="paragraph-login">
         Já possui uma conta?&nbsp;
-        <a href="/login">Entrar</a>
+        <a data-testid="paragraph-login" href="/login">Entrar</a>
       </p>
       { error && ALERT }
     </Container>

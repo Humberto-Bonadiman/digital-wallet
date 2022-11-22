@@ -36,18 +36,27 @@ const Header = () => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark" >
       <Container>
-        <Navbar.Brand href="#home">Digital-Wallet</Navbar.Brand>
+        <Navbar.Brand
+          data-testid="element-navbar-site-name"
+          href="#home"
+        >
+          Digital-Wallet
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link data-testid="element-navbar-username">
               { getUsername() }
             </Nav.Link>
-            <Nav.Link href="#pricing">R$ {convertBalance()}</Nav.Link>
+            <Nav.Link
+              data-testid="element-navbar-user-balance"
+              href="#pricing">
+                R$ {convertBalance()}
+              </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link
-              data-testid="customer_products__element-navbar-link-logout"
+              data-testid="element-navbar-link-logout"
               onClick={ logout }
             >
               Sair

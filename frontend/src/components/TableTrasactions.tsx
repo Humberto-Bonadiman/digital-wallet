@@ -23,14 +23,14 @@ const TableTrasactions: React.FC<IProps> = ({ transactions }) => {
         debitedAccountId,
         creditedAccountId,
         value
-      }) => {
+      }, index) => {
         return(
           <tr key={ id }>
-            <td>{id}</td>
-            <td>{createdAt}</td>
-            <td>{debitedAccountId}</td>
-            <td>{creditedAccountId}</td>
-            <td>{ value }</td>
+            <td data-testid={`table-id-${index + 1}`}>{id}</td>
+            <td data-testid={`table-created-at-${index + 1}`}>{createdAt}</td>
+            <td data-testid={`table-debited-account-id-${index + 1}`}>{debitedAccountId}</td>
+            <td data-testid={`table-credited-account-id-${index + 1}`}>{creditedAccountId}</td>
+            <td data-testid={`table-value-${index + 1}`}>{ value }</td>
           </tr>
         );
       });
@@ -45,7 +45,7 @@ const TableTrasactions: React.FC<IProps> = ({ transactions }) => {
   }, []);
 
   return (
-    <Table responsive="sm">
+    <Table data-testid="account-transition-table" responsive="sm">
       <thead>
         <tr>
           <th>id</th>

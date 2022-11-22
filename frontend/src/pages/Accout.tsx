@@ -75,7 +75,7 @@ const Account: React.FC = () => {
     <Button
       variant="outline-primary"
       type="submit"
-      data-testid="common_login__button-transaction"
+      data-testid="account__button-transaction"
       onClick={ () => {
         getAllUserTransactions();
       } }
@@ -88,7 +88,7 @@ const Account: React.FC = () => {
     <Button
       variant="outline-primary"
       type="submit"
-      data-testid="common_login__button-transaction"
+      data-testid="account__show-transactions"
       onClick={ () => {
         setTimeout(() => {
           setShowTable(true);
@@ -103,7 +103,7 @@ const Account: React.FC = () => {
     <Button
       variant="outline-primary"
       type="submit"
-      data-testid="common_login__button-transaction"
+      data-testid="account__hide-transactions"
       onClick={ () => {
         setTimeout(() => {
           setShowTable(false);
@@ -118,7 +118,7 @@ const Account: React.FC = () => {
     <Alert
       variant="danger"
       className="container-sm error text-center mt-1 w-50"
-      data-testid="common_login__element-invalid-username"
+      data-testid="account__element-invalid-checkbox"
     >
       <p>
         Pelo menos um dos checkboxs deve estar marcado&nbsp;&nbsp;&nbsp;&nbsp;
@@ -139,15 +139,21 @@ const Account: React.FC = () => {
       />
       <Form.Check 
         type="checkbox"
-        id="filter-debited-account"
+        id="filter-credited-account"
         label="Filtrar pela conta creditada"
         onClick={ () => { setCheckCredited(!checkCredited); } }
       />
       <Form.Group>
-        <label htmlFor="date">Data: </label>
+        <label
+          id="filter-data-label"
+          htmlFor="date"
+        >
+          Data:&nbsp;
+        </label>
         <input
           type="date"
           id="date"
+          data-testid="filter-data-transaction"
           name="date"
           onChange={ ({ target }) => setDate(target.value) }
         />
@@ -155,7 +161,7 @@ const Account: React.FC = () => {
       <Button
         variant="outline-primary"
         type="submit"
-        data-testid="common_login__button-transaction"
+        data-testid="account__button-filter"
         onClick={ () => { filterTable(); } }
       >
         Filtrar dados
@@ -194,7 +200,7 @@ const Account: React.FC = () => {
         <Button
           variant="outline-primary"
           type="submit"
-          data-testid="common_login__button-transaction"
+          data-testid="login__button-transaction"
           onClick={ () => { navigate('/transaction'); } }
         >
           Realizar Transferência

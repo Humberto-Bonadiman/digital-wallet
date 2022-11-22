@@ -58,7 +58,7 @@ const Login = () => {
     <Alert
       variant="danger"
       className="container-sm error text-center mt-1 w-50"
-      data-testid="common_login__element-invalid-username"
+      data-testid="login__element-invalid-username"
     >
       <p>
         Username ou senha incorretos&nbsp;&nbsp;&nbsp;&nbsp;
@@ -84,27 +84,27 @@ const Login = () => {
         style={ { maxWidth: '400px', minWidth: '300px' } }
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label data-testid="common_login__label-username">Username</Form.Label>
+          <Form.Label data-testid="login__label-username">Username</Form.Label>
           <Form.Control
             type="email"
             placeholder="joao@email.com.br"
-            data-testid="common_login__input-username"
+            data-testid="login__input-username"
             onChange={ ({ target }) => setUsername(target.value) }
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label data-testid="common_login__label-password">Senha</Form.Label>
+          <Form.Label data-testid="login__label-password">Senha</Form.Label>
           <Form.Control
             type="password"
             placeholder="**********"
-            data-testid="common_login__input-password"
+            data-testid="login__input-password"
             onChange={ ({ target }) => setPassword(target.value) }
           />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          data-testid="common_login__button-login"
+          data-testid="login__button-login"
           disabled={ !(isEmailValid(username) && password.length >= MIN_LENGTH) }
           onClick={ handleClick }
         >
@@ -114,7 +114,7 @@ const Login = () => {
         <Button
           variant="outline-primary"
           type="submit"
-          data-testid="common_login__button-register"
+          data-testid="login__button-register"
           onClick={ () => { navigate('/register'); } }
         >
           Ainda não possuo uma conta
