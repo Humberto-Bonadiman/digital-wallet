@@ -200,7 +200,7 @@ const Account: React.FC = () => {
         <Button
           variant="outline-primary"
           type="submit"
-          data-testid="login__button-transaction"
+          data-testid="account__button-navigate"
           onClick={ () => { navigate('/transaction'); } }
         >
           Realizar Transferência

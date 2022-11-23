@@ -97,6 +97,7 @@ export const fetchTransaction = async (
     }),
   });
   const response = await transactionFetch;
+  console.log(response);
   return response;
 }
 

@@ -48,7 +48,10 @@ const Transaction = () => {
   const generateTransaction = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await fetchTransaction(token, user.username, creditedAccount, value);
+    console.log(result);
     const POST = 201;
+    const r = await result.json();
+    console.log(r);
     if (result.status === POST) {
       navigate('/account');
     }
@@ -76,10 +79,17 @@ const Transaction = () => {
                 onClose();
                 }
               }
+              data-testid="transaction-confirm"
             >
               Sim
             </button>
-            <button className="btn btn-primary" onClick={ onClose }>Não</button>
+            <button
+              data-testid="transaction-deny"
+              className="btn btn-primary"
+              onClick={ onClose }
+            >
+              Não
+            </button>
             <p>Caso a operação ocorra com sucesso você será redirecionado para a página principal</p>
           </div>
         );
@@ -91,7 +101,7 @@ const Transaction = () => {
     <Alert
       variant="danger"
       className="container-sm error text-center mt-1 w-50"
-      data-testid="common_login__element-invalid-username"
+      data-testid="transaction__error"
     >
       <p>
         {message}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,24 +116,39 @@ const Transaction = () => {
     <Container className="transaction-form">
       <Form className="form">
         <Form.Group className="mb-3">
-          <Form.Label>Username Conta Recebedora</Form.Label>
+          <Form.Label
+            data-testid="transaction__label-username"
+          >
+            Username Conta Recebedora
+          </Form.Label>
           <Form.Control
             type="email"
             placeholder="joao@email.com"
+            data-testid="transaction__username"
             onChange={ ({ target }) => setCreditedAccount(target.value) }
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Valor Transferência</Form.Label>
+          <Form.Label
+            data-testid="transaction__label-value"
+          >
+            Valor Transferência
+          </Form.Label>
           <Form.Control
             type="number"
             step="0.01"
             min="0"
+            data-testid="transaction__value"
             placeholder="Valor em reais (R$)"
             onChange={ ({ target }) => setValue(Number(target.value)) }
           />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={ submit }>
+        <Button
+          data-testid="transaction__button-tranfer"
+          variant="primary"
+          type="submit"
+          onClick={ submit }
+        >
           Realizar transferência
         </Button>
         <Button

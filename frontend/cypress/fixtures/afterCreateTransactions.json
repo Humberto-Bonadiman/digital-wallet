@@ -19,5 +19,12 @@
     "creditedAccountId":2,
     "value":"20",
     "createdAt":"20-06-2022"
+  },
+  {
+    "id": 4,
+    "debitedAccountId": 2,
+    "creditedAccountId": 1,
+    "value": "3",
+    "createdAt": "22-11-2022"
   }
 ]
