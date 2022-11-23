@@ -18,6 +18,7 @@ services:
       dockerfile: Dockerfile
     container_name: backend
     restart: on-failure
+    env_file: ./.env
     ports:
       - 3001:3001
     environment:
@@ -33,6 +34,7 @@ services:
   postgres:
     image: postgres:14
     restart: always
+    env_file: ./.env
     environment:
       - POSTGRES_PASSWORD=$DB_PASSWORD
       - POSTGRES_USER=$DB_USER
