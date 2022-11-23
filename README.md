@@ -53,7 +53,7 @@ Troque o valor de DB_PASSWORD pelo valor que você utilizou em {password} em DAT
 As variáveis **REACT_APP_HOSTNAME** e **REACT_APP_BACKEND_PORT** você pode manter os dados conforme o arquivo .env.example. Caso sinta necessidade de mudar algum dos valores, lembre-se que esses valores correspondem à porta do backend e o hostname do mesmo.
 <br/>
 
-### Diretório Frontend
+### Diretório Backend
 ```javascript
   DATABASE_URL="postgresql://{username}:{password}@localhost:5432/digital_wallet?schema=public"
   PORT=3001
