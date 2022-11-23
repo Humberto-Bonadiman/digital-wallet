@@ -11,15 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Create env file in root directory'
+      - name: create env file
         run: |
-          echo "${{ secrets.ENV_ROOT }}" > .env
-      - uses: actions/checkout@v3
-      
-      - name: 'Create env file in backend directory'
-        run: |
-          echo "${{ secrets.ENV_BACKEND }}" > .env
-      - uses: actions/checkout@v3
+          touch .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
 
       - name: Docker Login
         uses: docker/login-action@v2.0.0
