@@ -19,7 +19,7 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
   npm install
 ```
 
-3. Crie as variáveis de ambiente nos diretórios raiz, backend e frontend conforme a explicação do próximo tópico.
+3. Crie as variáveis de ambiente nos diretórios raiz do projeto e backend conforme a explicação do próximo tópico.
 ```javascript
   touch .env
 ```
