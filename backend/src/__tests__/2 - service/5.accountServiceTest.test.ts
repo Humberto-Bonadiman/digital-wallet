@@ -49,7 +49,7 @@ describe('19 - Find an account by id in service', () => {
 
     it('return the expected data', async () => {
 
-      const response = await accountsService.findById(1);
+      const response = await accountsService.findById(1000000);
 
       expect(response.id).to.be.an('number');
       expect(Number(response.balance)).to.be.equal(Number(300.00));

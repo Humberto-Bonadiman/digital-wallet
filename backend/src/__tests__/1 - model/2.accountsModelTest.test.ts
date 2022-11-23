@@ -51,7 +51,7 @@ describe('6 - Find a Account by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.accounts.findUniqueOrThrow({
-          where: { id: 1 }
+          where: { id: 1000000 }
         });
   
         expect(response).to.be.an('object');
@@ -79,7 +79,7 @@ describe('7 - Update a Account by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.accounts.update({
-          where: { id: 1 },
+          where: { id: 1000000 },
           data: { balance: 300 },
         });
   
@@ -108,7 +108,7 @@ describe('8 - Delete a Account by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.accounts.delete({
-          where: { id: 4 }
+          where: { id: 1000003 }
         });
   
         expect(response).to.be.an('object');

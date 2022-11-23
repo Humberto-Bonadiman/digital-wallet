@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import login from '../fixtures/login.json';
 import username from '../fixtures/username.json';
 import transactions from '../fixtures/transactions.json';
@@ -6,11 +7,15 @@ import filterDebited from '../fixtures/filterDebited.json';
 import filterCredited from '../fixtures/filterCredited.json';
 import filterCreditedDate from '../fixtures/filterCreditedDate.json';
 
-const reqValueLogin = 'http://localhost:3001/users/login';
-const reqValueUsername = 'http://localhost:3001/users/username';
-const reqValueTransactions = 'http://localhost:3001/transactions';
-const reqValueAccount = 'http://localhost:3001/accounts/2';
-const reqFilterDebited = 'http://localhost:3001/transactions/filter';
+const NUMBER = 3001;
+const PORT = process.env.REACT_APP_BACKEND_PORT || NUMBER;
+const URL = process.env.REACT_APP_HOSTNAME || 'localhost';
+
+const reqValueLogin = `http://${URL}:${PORT}/users/login`;
+const reqValueUsername = `http://${URL}:${PORT}/users/username`;
+const reqValueTransactions = `http://${URL}:${PORT}/transactions`;
+const reqValueAccount = `http://${URL}:${PORT}/accounts/1000001`;
+const reqFilterDebited = `http://${URL}:${PORT}/transactions/filter`;
 
 const beginAccountTest = () => {
   cy.visit('http://localhost:3000/login', {
@@ -18,7 +23,7 @@ const beginAccountTest = () => {
       win.localStorage.clear();
     },
   });
-  cy.get('[data-testid="login__input-username"]').type('bob@prisma.io');
+  cy.get('[data-testid="login__input-username"]').type('bob@email.com');
   cy.get('[data-testid="login__input-password"]').type('Abcdefg1');
   
   cy.fixture('login').then(function() {
@@ -54,7 +59,7 @@ describe('Test account page', () => {
     beginAccountTest();
     cy.viewport(1000, 700);
     cy.get('[data-testid="element-navbar-site-name"]').should('have.text', 'Digital-Wallet');
-    cy.get('[data-testid="element-navbar-username"]').should('have.text', 'bob@prisma.io');
+    cy.get('[data-testid="element-navbar-username"]').should('have.text', 'bob@email.com');
     cy.get('[data-testid="element-navbar-user-balance"]').should('have.text', 'R$ 75.00');
     cy.get('[data-testid="element-navbar-link-logout"]').should('have.text', 'Sair');
     cy.get('[data-testid="element-navbar-link-logout"]').click();
@@ -84,9 +89,9 @@ describe('Test account page', () => {
     cy.get('#filter-data-label');
     cy.get('[data-testid="account__button-filter"]').should('have.text', 'Filtrar dados');
     cy.get('[data-testid="account-transition-table"]');
-    cy.get('[data-testid="table-id-1"]').should('have.text', '1');
-    cy.get('[data-testid="table-id-2"]').should('have.text', '2');
-    cy.get('[data-testid="table-id-3"]').should('have.text', '3');
+    cy.get('[data-testid="table-id-1"]').should('have.text', '1000000');
+    cy.get('[data-testid="table-id-2"]').should('have.text', '1000001');
+    cy.get('[data-testid="table-id-3"]').should('have.text', '1000002');
     cy.get('[data-testid="account__hide-transactions"]').click();
     cy.get('[data-testid="account-transition-table"]').should('not.exist');
     cy.window().then((win) => {
@@ -106,7 +111,7 @@ describe('Test account page', () => {
       }).as('filterDebited');
       cy.get('[data-testid="account__button-filter"]').click();
     });
-    cy.get('[data-testid="table-id-1"]').should('have.text', '2');
+    cy.get('[data-testid="table-id-1"]').should('have.text', '1000001');
     cy.get('[data-testid="table-id-2"]').should('not.exist');
     cy.get('#filter-debited-account').click();
     cy.get('#filter-credited-account').click();
@@ -117,8 +122,8 @@ describe('Test account page', () => {
       }).as('filterCredited');
       cy.get('[data-testid="account__button-filter"]').click();
     });
-    cy.get('[data-testid="table-id-1"]').should('have.text', '1');
-    cy.get('[data-testid="table-id-2"]').should('have.text', '3');
+    cy.get('[data-testid="table-id-1"]').should('have.text', '1000000');
+    cy.get('[data-testid="table-id-2"]').should('have.text', '1000002');
     cy.get('#filter-data-label').type('2022-05-31');
     cy.fixture('filterCreditedDate').then(function() {
       cy.intercept('POST', reqFilterDebited, {
@@ -127,7 +132,7 @@ describe('Test account page', () => {
       }).as('filterCreditedDate');
       cy.get('[data-testid="account__button-filter"]').click();
     });
-    cy.get('[data-testid="table-id-1"]').should('have.text', '1');
+    cy.get('[data-testid="table-id-1"]').should('have.text', '1000000');
     cy.get('[data-testid="table-id-2"]').should('not.exist');
     cy.fixture('transactions').then(function() {
       cy.intercept('GET', reqValueTransactions, {
@@ -136,9 +141,9 @@ describe('Test account page', () => {
       }).as('transactions');
       cy.get('[data-testid="account__button-transaction"]').click();
     });
-    cy.get('[data-testid="table-id-1"]').should('have.text', '1');
-    cy.get('[data-testid="table-id-2"]').should('have.text', '2');
-    cy.get('[data-testid="table-id-3"]').should('have.text', '3');
+    cy.get('[data-testid="table-id-1"]').should('have.text', '1000000');
+    cy.get('[data-testid="table-id-2"]').should('have.text', '1000001');
+    cy.get('[data-testid="table-id-3"]').should('have.text', '1000002');
   });
 });
 

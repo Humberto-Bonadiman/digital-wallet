@@ -1,3 +1,4 @@
+// @ts-check
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Container, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';

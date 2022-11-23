@@ -1,10 +1,13 @@
-/// <reference types="cypress" />
 import "cypress-localstorage-commands";
 
-const reqValueLogin = 'http://localhost:3001/users/login';
-const reqValueUsername = 'http://localhost:3001/users/username';
-const reqValueTransactions = 'http://localhost:3001/transactions';
-const reqValueAccount = 'http://localhost:3001/accounts/2';
+const NUMBER = 3001;
+const PORT = process.env.REACT_APP_BACKEND_PORT || NUMBER;
+const URL = process.env.REACT_APP_HOSTNAME || 'localhost';
+
+const reqValueLogin = `http://${URL}:${PORT}/users/login`;
+const reqValueUsername = `http://${URL}:${PORT}/users/username`;
+const reqValueTransactions = `http://${URL}:${PORT}/transactions`;
+const reqValueAccount = `http://${URL}:${PORT}/accounts/1000001`;
 
 describe('Test login page', () => {
   it('if login contains the correct information', () => {
@@ -22,7 +25,7 @@ describe('Test login page', () => {
         win.localStorage.clear();
       },
     });
-    cy.get('[data-testid="login__input-username"]').type('bob@prisma.io');
+    cy.get('[data-testid="login__input-username"]').type('bob@email.com');
     cy.get('[data-testid="login__input-password"]').type('Abcdefg1');
     
     cy.fixture('login').then(function(login) {

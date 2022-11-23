@@ -60,16 +60,16 @@ describe('2 - Find a User by Id using model', () => {
       it('returns an object with the correct data', async () => {
 
         const response = await prisma.users.findUniqueOrThrow({
-          where: { id: 1 }
+          where: { id: 1000000 }
         });
   
         expect(response).to.be.an('object');
         expect(response).to.have.a.property('id');
         expect(response).to.have.a.property('username');
         expect(response).to.have.a.property('accountId');
-        expect(response.username).to.be.equal('alice@prisma.io');
-        expect(response.id).to.be.equal(1);
-        expect(response.accountId).to.be.equal(1);
+        expect(response.username).to.be.equal('alice@email.com');
+        expect(response.id).to.be.equal(1000000);
+        expect(response.accountId).to.be.equal(1000000);
 
       });
     });
@@ -94,7 +94,7 @@ describe('3 - Update a User by Id using model', () => {
         const passwordHash = bcrypt.hashSync('1234567A', 10);
 
         const response = await prisma.users.update({
-          where: { id: 1 },
+          where: { id: 1000000 },
           data: {
             password: passwordHash
           }
@@ -104,9 +104,9 @@ describe('3 - Update a User by Id using model', () => {
         expect(response).to.have.a.property('id');
         expect(response).to.have.a.property('username');
         expect(response).to.have.a.property('accountId');
-        expect(response.username).to.be.equal('alice@prisma.io');
-        expect(response.id).to.be.equal(1);
-        expect(response.accountId).to.be.equal(1);
+        expect(response.username).to.be.equal('alice@email.com');
+        expect(response.id).to.be.equal(1000000);
+        expect(response.accountId).to.be.equal(1000000);
         expect(response.password).to.be.equal(passwordHash);
       });
     });
@@ -130,16 +130,16 @@ describe('4 - Delete a User by Id using model', () => {
       it('returns an object with the correct data', async () => {
 
         const response = await prisma.users.delete({
-          where: { id: 3 },
+          where: { id: 1000002 },
         });
   
         expect(response).to.be.an('object');
         expect(response).to.have.a.property('id');
         expect(response).to.have.a.property('username');
         expect(response).to.have.a.property('accountId');
-        expect(response.username).to.be.equal('natsu@prisma.io');
-        expect(response.id).to.be.equal(3);
-        expect(response.accountId).to.be.equal(3);
+        expect(response.username).to.be.equal('natsu@email.com');
+        expect(response.id).to.be.equal(1000002);
+        expect(response.accountId).to.be.equal(1000002);
       });
     });
   });

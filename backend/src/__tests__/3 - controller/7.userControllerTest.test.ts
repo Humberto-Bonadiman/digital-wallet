@@ -63,7 +63,7 @@ describe('24 - Generate a token in login', () => {
         .post('/users/login')
         .set('X-API-Key', 'foobar')
         .send({
-          username: 'bob@prisma.io',
+          username: 'bob@email.com',
           password: 'Abcdefg1'
         });
 
@@ -88,18 +88,18 @@ describe('25 - Find a user by id', () => {
       findUser.restore();
     });
     it('returns the correct data', async () => {
-      const token = await new UsersService().login('alice@prisma.io');
+      const token = await new UsersService().login('alice@email.com');
       chaiHttpResponse = await chai
         .request(app)
-        .get('/users/1')
+        .get('/users/1000000')
         .set('authorization', token);
 
       const response = chaiHttpResponse.body;
 
       expect(chaiHttpResponse).to.have.status(StatusCode.OK);
       expect(response).to.be.an('object');
-      expect(response.username).be.be.equal('alice@prisma.io');
-      expect(response.accountId).to.be.equal(1);
+      expect(response.username).be.be.equal('alice@email.com');
+      expect(response.accountId).to.be.equal(1000000);
     });
   });
 });
@@ -118,18 +118,18 @@ describe('26 - Update user password', () => {
       updateUser.restore();
     });
     it('does not return anything', async () => {
-      const token = await new UsersService().login('bob@prisma.io');
+      const token = await new UsersService().login('bob@email.com');
       chaiHttpResponse = await chai
         .request(app)
-        .patch('/users/2')
+        .patch('/users/1000001')
         .set('authorization', token)
         .send({
-          username: 'bob@prisma.io',
+          username: 'bob@email.com',
           password: 'Abcdefg1'
         });
 
       const updateUser = await prisma.users
-          .findUniqueOrThrow({ where: { username: 'bob@prisma.io' }});
+          .findUniqueOrThrow({ where: { username: 'bob@email.com' }});
       const comparePasswrod = await bcrypt.compare('Abcdefg1', updateUser.password);
 
       expect(chaiHttpResponse).to.have.status(StatusCode.NO_CONTENT);
@@ -152,14 +152,14 @@ describe('26 - Delete a user by Id', () => {
       deleteUser.restore();
     });
     it('returns the correct data', async () => {
-      const token = await new UsersService().login('dragon@prisma.io');
+      const token = await new UsersService().login('dragon@email.com');
       chaiHttpResponse = await chai
         .request(app)
-        .delete('/users/6')
+        .delete('/users/1000005')
         .set('authorization', token);
 
       const deletedUser = await prisma.users
-          .findUnique({ where: { username: 'dragon@prisma.io' }});
+          .findUnique({ where: { username: 'dragon@email.com' }});
 
       expect(chaiHttpResponse).to.have.status(StatusCode.NO_CONTENT);
       expect(deletedUser).to.be.equal(null);

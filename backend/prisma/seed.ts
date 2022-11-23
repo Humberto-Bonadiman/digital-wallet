@@ -6,194 +6,194 @@ async function main() {
   const passwordAlice = '1234567A';
   const passwordHashAlice = bcrypt.hashSync(passwordAlice, 10);
   await prisma.accounts.upsert({
-    where: { id: 1 },
+    where: { id: 1000000 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 1,
+      id: 1000000,
       balance: 100.00
     },
   });
 
   await prisma.users.upsert({
-    where: { id: 1 },
+    where: { id: 1000000 },
     update: {
-      username: 'alice@prisma.io',
+      username: 'alice@email.com',
       password: passwordHashAlice,
-      accountId: 1
+      accountId: 1000000
     },
     create: {
-      id: 1,
-      username: 'alice@prisma.io',
+      id: 1000000,
+      username: 'alice@email.com',
       password: passwordHashAlice,
-      accountId: 1
+      accountId: 1000000
     },
   });
   const passwordBob = 'Abcdefg1';
   const passwordHashBob = bcrypt.hashSync(passwordBob, 10);
 
   await prisma.accounts.upsert({
-    where: { id: 2 },
+    where: { id: 1000001 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 2,
+      id: 1000001,
       balance: 100.00
     },
   });
 
   await prisma.users.upsert({
-    where: { id: 2 },
+    where: { id: 1000001 },
     update: {
-      username: 'bob@prisma.io',
+      username: 'bob@email.com',
       password: passwordHashBob,
-      accountId: 2
+      accountId: 1000001
     },
     create: {
-      id: 2,
-      username: 'bob@prisma.io',
+      id: 1000001,
+      username: 'bob@email.com',
       password: passwordHashBob,
-      accountId: 2
+      accountId: 1000001
     },
   });
 
   await prisma.accounts.upsert({
-    where: { id: 3 },
+    where: { id: 1000002 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 3,
+      id: 1000002,
       balance: 100.00
     },
   });
 
   await prisma.users.upsert({
-    where: { id: 3 },
+    where: { id: 1000002 },
     update: {
-      username: 'natsu@prisma.io',
+      username: 'natsu@email.com',
       password: passwordHashBob,
-      accountId: 3
+      accountId: 1000002
     },
     create: {
-      id: 3,
-      username: 'natsu@prisma.io',
+      id: 1000002,
+      username: 'natsu@email.com',
       password: passwordHashBob,
-      accountId: 3
+      accountId: 1000002
     },
   });
 
   await prisma.accounts.upsert({
-    where: { id: 4 },
+    where: { id: 1000003 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 4,
+      id: 1000003,
       balance: 100.00
     },
   });
 
   await prisma.accounts.upsert({
-    where: { id: 5 },
+    where: { id: 1000004 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 5,
+      id: 1000004,
       balance: 100.00
     },
   });
 
   await prisma.users.upsert({
-    where: { id: 5 },
+    where: { id: 1000004 },
     update: {
-      username: 'erza@prisma.io',
+      username: 'erza@email.com',
       password: passwordHashBob,
-      accountId: 5
+      accountId: 1000004
     },
     create: {
-      id: 5,
-      username: 'erza@prisma.io',
+      id: 1000004,
+      username: 'erza@email.com',
       password: passwordHashBob,
-      accountId: 5
+      accountId: 1000004
     },
   });
 
   await prisma.accounts.upsert({
-    where: { id: 6 },
+    where: { id: 1000005 },
     update: {
       balance: 100.00
     },
     create: {
-      id: 6,
+      id: 1000005,
       balance: 100.00
     },
   });
 
   await prisma.users.upsert({
-    where: { id: 6 },
+    where: { id: 1000005 },
     update: {
-      username: 'dragon@prisma.io',
+      username: 'dragon@email.com',
       password: passwordHashBob,
-      accountId: 6
+      accountId: 1000005
     },
     create: {
-      id: 6,
-      username: 'dragon@prisma.io',
+      id: 1000005,
+      username: 'dragon@email.com',
       password: passwordHashBob,
-      accountId: 6
+      accountId: 1000005
     },
   });
 
   await prisma.transactions.upsert({
-    where: { id: 1 },
+    where: { id: 1000000 },
     update: {
-      debitedAccountId: 1,
-      creditedAccountId: 2,
+      debitedAccountId: 1000000,
+      creditedAccountId: 1000001,
       value: 5.00,
       createdAt: '31-05-2022'
     },
     create: {
-      id: 1,
-      debitedAccountId: 1,
-      creditedAccountId: 2,
+      id: 1000000,
+      debitedAccountId: 1000000,
+      creditedAccountId: 1000001,
       value: 5.00,
       createdAt: '31-05-2022'
     }
   });
 
   await prisma.transactions.upsert({
-    where: { id: 2 },
+    where: { id: 1000001 },
     update: {
-      debitedAccountId: 2,
-      creditedAccountId: 1,
+      debitedAccountId: 1000001,
+      creditedAccountId: 1000000,
       value: 5.00,
       createdAt: '31-05-2022'
     },
     create: {
-      id: 2,
-      debitedAccountId: 2,
-      creditedAccountId: 1,
+      id: 1000001,
+      debitedAccountId: 1000001,
+      creditedAccountId: 1000000,
       value: 5.00,
       createdAt: '31-05-2022'
     }
   });
 
   await prisma.transactions.upsert({
-    where: { id: 3 },
+    where: { id: 1000002 },
     update: {
-      debitedAccountId: 3,
-      creditedAccountId: 1,
+      debitedAccountId: 1000002,
+      creditedAccountId: 1000000,
       value: 5.00,
       createdAt: '31-05-2022'
     },
     create: {
-      id: 3,
-      debitedAccountId: 3,
-      creditedAccountId: 1,
+      id: 1000002,
+      debitedAccountId: 1000002,
+      creditedAccountId: 1000000,
       value: 5.00,
       createdAt: '31-05-2022'
     }

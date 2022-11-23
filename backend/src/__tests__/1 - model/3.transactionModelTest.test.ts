@@ -21,8 +21,8 @@ describe('9 - Create a new Transaction by model', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.transactions.create({
           data: {
-            debitedAccountId: 1,
-            creditedAccountId: 2,
+            debitedAccountId: 1000000,
+            creditedAccountId: 1000001,
             value: new Decimal(10.00),
             createdAt: '31-05-2022'
           }
@@ -34,8 +34,8 @@ describe('9 - Create a new Transaction by model', () => {
         expect(response).to.have.a.property('creditedAccountId');
         expect(response).to.have.a.property('value');
         expect(response).to.have.a.property('createdAt');
-        expect(response.debitedAccountId).to.be.equal(1);
-        expect(response.creditedAccountId).to.be.equal(2);
+        expect(response.debitedAccountId).to.be.equal(1000000);
+        expect(response.creditedAccountId).to.be.equal(1000001);
         expect(Number(response.value)).to.be.equal(Number(10.00));
         expect(response.createdAt).to.be.equal('31-05-2022');
 
@@ -61,7 +61,7 @@ describe('10 - Find a Transaction by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.transactions.findUniqueOrThrow({
-          where: { id: 1 }
+          where: { id: 1000000 }
         });
   
         expect(response).to.be.an('object');
@@ -70,8 +70,8 @@ describe('10 - Find a Transaction by id in model', () => {
         expect(response).to.have.a.property('creditedAccountId');
         expect(response).to.have.a.property('value');
         expect(response).to.have.a.property('createdAt');
-        expect(response.debitedAccountId).to.be.equal(1);
-        expect(response.creditedAccountId).to.be.equal(2);
+        expect(response.debitedAccountId).to.be.equal(1000000);
+        expect(response.creditedAccountId).to.be.equal(1000001);
         expect(Number(response.value)).to.be.equal(Number(5.00));
         expect(response.createdAt).to.be.equal('31-05-2022');
       });
@@ -95,10 +95,10 @@ describe('11 - Update a Transaction by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.transactions.update({
-          where: { id: 1 },
+          where: { id: 1000000 },
           data: { 
-            debitedAccountId: 1,
-            creditedAccountId: 2,
+            debitedAccountId: 1000000,
+            creditedAccountId: 1000001,
             value: 10.00,
             createdAt: '31-05-2022'
           },
@@ -110,8 +110,8 @@ describe('11 - Update a Transaction by id in model', () => {
         expect(response).to.have.a.property('creditedAccountId');
         expect(response).to.have.a.property('value');
         expect(response).to.have.a.property('createdAt');
-        expect(response.debitedAccountId).to.be.equal(1);
-        expect(response.creditedAccountId).to.be.equal(2);
+        expect(response.debitedAccountId).to.be.equal(1000000);
+        expect(response.creditedAccountId).to.be.equal(1000001);
         expect(Number(response.value)).to.be.equal(Number(10.00));
         expect(response.createdAt).to.be.equal('31-05-2022');
       });
@@ -135,7 +135,7 @@ describe('12 - Delete a Transaction by id in model', () => {
     describe('when it is successfully entered', () => {
       it('returns an object with the correct data', async () => {
         const response = await prisma.transactions.delete({
-          where: { id: 2 }
+          where: { id: 1000001 }
         });
   
         expect(response).to.be.an('object');
@@ -144,8 +144,8 @@ describe('12 - Delete a Transaction by id in model', () => {
         expect(response).to.have.a.property('creditedAccountId');
         expect(response).to.have.a.property('value');
         expect(response).to.have.a.property('createdAt');
-        expect(response.debitedAccountId).to.be.equal(2);
-        expect(response.creditedAccountId).to.be.equal(1);
+        expect(response.debitedAccountId).to.be.equal(1000001);
+        expect(response.creditedAccountId).to.be.equal(1000000);
         expect(Number(response.value)).to.be.equal(Number(5.00));
         expect(response.createdAt).to.be.equal('31-05-2022');
       });

@@ -3,8 +3,12 @@ import afterCreateTransactions from '../fixtures/afterCreateTransactions.json';
 import afterTransactionAccount from '../fixtures/afterTransactionAccount.json';
 import beginAccountTest from './account.cy';
 
-const reqCreateTransaction = 'http://localhost:3001/transactions';
-const reqValueAccount = 'http://localhost:3001/accounts/2';
+const NUMBER = 3001;
+const PORT = process.env.REACT_APP_BACKEND_PORT || NUMBER;
+const URL = process.env.REACT_APP_HOSTNAME || 'localhost';
+
+const reqCreateTransaction = `http://${URL}:${PORT}/transactions`;
+const reqValueAccount = `http://${URL}:${PORT}/accounts/1000001`;
 
 describe('Test transaction page', () => {
   it('if contains correct data', () => {
@@ -16,7 +20,7 @@ describe('Test transaction page', () => {
       .should('have.text', 'Username Conta Recebedora');
     cy.get('[data-testid="transaction__label-value"]')
       .should('have.text', 'Valor Transferência');
-    cy.get('[data-testid="transaction__username"]').type('alice@prisma.io');
+    cy.get('[data-testid="transaction__username"]').type('alice@email.com');
     cy.get('[data-testid="transaction__value"]').type('5,00');
     cy.get('[data-testid="transaction__button-tranfer"]').click();
     cy.get('[data-testid="transaction-confirm"]').should('have.text', 'Sim');
@@ -42,8 +46,8 @@ describe('Test transaction page', () => {
       }).as('afterTransactionAccount');
     });
     cy.get('[data-testid="account__show-transactions"]').click();
-    cy.wait(500);
-    cy.get('[data-testid="table-id-4"]').should('have.text', '4');
+    cy.wait(1000);
+    cy.get('[data-testid="table-id-4"]').should('have.text', '1000003');
     cy.get('[data-testid="element-navbar-user-balance"]').should('have.text', 'R$ 72.00');
   });
 

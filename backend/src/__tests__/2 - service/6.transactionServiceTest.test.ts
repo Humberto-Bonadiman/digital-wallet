@@ -23,7 +23,7 @@ describe('20- Create a new transaction by service', () => {
     });
 
     it('returns an object with the correct data', async () => {
-      const response = await transactionService.create('alice@prisma.io', 'bob@prisma.io', 10.00);
+      const response = await transactionService.create('alice@email.com', 'bob@email.com', 10.00);
       const dateNow = new Date();
       const formatDate = `${dateNow.getDate()}-${dateNow.getMonth() + 1}-${dateNow.getFullYear()}`;
 
@@ -33,11 +33,11 @@ describe('20- Create a new transaction by service', () => {
       expect(response).to.have.a.property('creditedAccountId');
       expect(response).to.have.a.property('value');
       expect(response).to.have.a.property('createdAt');
-      expect(response.debitedAccountId).to.be.equal(1);
-      expect(response.creditedAccountId).to.be.equal(2);
+      expect(response.debitedAccountId).to.be.equal(1000000);
+      expect(response.creditedAccountId).to.be.equal(1000001);
       expect(Number(response.value)).to.be.equal(Number(10.00));
       expect(response.createdAt).to.be.equal(formatDate);
-      const returnValue = await transactionService.create('bob@prisma.io', 'alice@prisma.io', 10.00);
+      const returnValue = await transactionService.create('bob@email.com', 'alice@email.com', 10.00);
 
       await prisma.transactions.delete({ where: { id: response.id }});
       await prisma.transactions.delete({ where: { id: returnValue.id }});
@@ -60,15 +60,15 @@ describe('21 - Find all user transaction by token in service', () => {
     });
 
     it('return the expected data', async () => {
-      const token = await userService.login('alice@prisma.io');
+      const token = await userService.login('alice@email.com');
 
       const response = await transactionService.findAllUserTransactions(token);
-      const findIndex = response.findIndex((transactionId) => transactionId.id === 1);
+      const findIndex = response.findIndex((transactionId) => transactionId.id === 1000000);
 
       expect(response).to.be.an('array');
       expect(response[findIndex].id).to.be.an('number');
-      expect(response[findIndex].debitedAccountId).to.be.equal(1);
-      expect(response[findIndex].creditedAccountId).to.be.equal(2);
+      expect(response[findIndex].debitedAccountId).to.be.equal(1000000);
+      expect(response[findIndex].creditedAccountId).to.be.equal(1000001);
       expect(Number(response[findIndex].value)).to.be.equal(Number(10.00));
     });
   });
@@ -89,20 +89,20 @@ describe('22 - Filter all user transaction in service', () => {
     });
 
     it('return the expected data when all values are used to filter', async () => {
-      const token = await userService.login('alice@prisma.io');
+      const token = await userService.login('alice@email.com');
 
       const response = await transactionService.filterUserTransactions(token, true, true, '31-05-2022');
-      const findIndexId1 = response.findIndex((transactionId) => transactionId.id === 1);
-      const findIndexId3 = response.findIndex((transactionId) => transactionId.id === 3);
+      const findIndexId1 = response.findIndex((transactionId) => transactionId.id === 1000000);
+      const findIndexId3 = response.findIndex((transactionId) => transactionId.id === 1000002);
 
       expect(response).to.be.an('array');
       expect(response[findIndexId1].id).to.be.an('number');
-      expect(response[findIndexId1].debitedAccountId).to.be.equal(1);
-      expect(response[findIndexId1].creditedAccountId).to.be.equal(2);
+      expect(response[findIndexId1].debitedAccountId).to.be.equal(1000000);
+      expect(response[findIndexId1].creditedAccountId).to.be.equal(1000001);
       expect(Number(response[findIndexId1].value)).to.be.equal(Number(10.00));
       expect(response[findIndexId3].id).to.be.an('number');
-      expect(response[findIndexId3].debitedAccountId).to.be.equal(3);
-      expect(response[findIndexId3].creditedAccountId).to.be.equal(1);
+      expect(response[findIndexId3].debitedAccountId).to.be.equal(1000002);
+      expect(response[findIndexId3].creditedAccountId).to.be.equal(1000000);
       expect(Number(response[findIndexId3].value)).to.be.equal(Number(5.00));
     });
   });

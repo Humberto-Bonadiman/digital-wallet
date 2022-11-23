@@ -51,7 +51,7 @@ describe('14 - Generate a token for user by service', () => {
     });
 
     it('returns an object with the correct data', async () => {
-      const response = await usersService.login('alice@prisma.io');
+      const response = await usersService.login('alice@email.com');
 
       expect(response).to.be.an('string');
     });
@@ -74,11 +74,11 @@ describe('15 - Find a user by id in service', () => {
 
     it('return the expected data', async () => {
 
-      const response = await usersService.findById(1);
+      const response = await usersService.findById(1000000);
 
       expect(response.id).to.be.an('number');
-      expect(response.username).to.be.equal('alice@prisma.io');
-      expect(response.accountId).to.be.equal(1);
+      expect(response.username).to.be.equal('alice@email.com');
+      expect(response.accountId).to.be.equal(1000000);
     });
   });
 });
@@ -98,14 +98,14 @@ describe('16 - Update a user by username in service', () => {
     });
     it('return the expected data', async () => {
       const userUpdate: usersInterface = {
-        username: 'alice@prisma.io',
+        username: 'alice@email.com',
         password: 'Abcdefg1'
       };
       const response = await usersService.updateUserPassword(userUpdate);
 
       expect(response.id).to.be.an('number');
-      expect(response.username).to.be.equal('alice@prisma.io');
-      expect(response.accountId).to.be.equal(1);
+      expect(response.username).to.be.equal('alice@email.com');
+      expect(response.accountId).to.be.equal(1000000);
     })
   });
 });
@@ -123,8 +123,8 @@ describe('17 - Delete a user by id in service', () => {
     });
     it('return the expected data', async () => {
 
-      await usersService.deleteById(5);
-      const response = await prisma.users.findUnique({ where: { id: 5 }});
+      await usersService.deleteById(1000004);
+      const response = await prisma.users.findUnique({ where: { id: 1000004 }});
       expect(response).to.be.equal(null);
 
     })

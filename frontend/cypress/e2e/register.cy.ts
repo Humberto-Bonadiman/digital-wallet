@@ -1,7 +1,11 @@
 import userCreated from '../fixtures/userCreated.json';
-const reqValueUser = 'http://localhost:3001/users';
 
+const NUMBER = 3001;
+const PORT = process.env.REACT_APP_BACKEND_PORT || NUMBER;
+const URL = process.env.REACT_APP_HOSTNAME || 'localhost';
 const CREATED = 201;
+
+const reqValueUser = `http://${URL}:${PORT}/users`;
 
 describe('Test register page', () => {
   it('should register a new user page', () => {
@@ -11,7 +15,7 @@ describe('Test register page', () => {
       },
     });
     cy.get('[data-testid="register__label-username"]').should('have.text', 'Username');
-    cy.get('[data-testid="register__input-username"]').type('jacobTestRegister@prisma.io');
+    cy.get('[data-testid="register__input-username"]').type('jacobTestRegister@email.com');
     cy.get('[data-testid="register__label-password"]').should('have.text', 'Senha');
     cy.get('[data-testid="register__input-password"]').type('1234567A');
     cy.fixture('userCreated').then(function() {
