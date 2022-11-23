@@ -1,5 +1,7 @@
 # Boas vindas ao repositório do projeto Digital Wallet
 
+[![Continuos Integration with GitHub](https://github.com/Humberto-Bonadiman/digital-wallet/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Humberto-Bonadiman/digital-wallet/actions/workflows/docker-publish.yml)
+
 ## Descrição do projeto
 
 O desafio consistiu na criação de uma carteira digital cujo objetivo seja possibilitar que usuários consigam realizar transferências internas entre si. É uma aplicação Full-Stack onde o back-end foi desenvolvido com Node.js, TypeScript, Prisma ORM e o banco de dados utilizado foi o PostgreSQL. Já o Front-End foi construído utilizando React com TypeScript, Redux, BootStrap e CSS.
