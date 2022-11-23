@@ -16,14 +16,6 @@ jobs:
         run: |
           touch .env
           echo "${{ secrets.ENV_FILE }}" > .env
-      - uses: actions/checkout@v3
-
-      - name: 'Create .env file in backend'
-        run: |
-          cd ..
-          cd ..
-          cd backend
-          touch .env
           echo "${{ secrets.ENV_BACKEND }}" > backend/.env
       - uses: actions/checkout@v3
 
