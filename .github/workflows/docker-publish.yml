@@ -38,10 +38,11 @@ jobs:
 
       - name: Docker Compose Build
         working-directory: .
-        env: |
-          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
         run: docker-compose build
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        
 
       - name: Build and push Docker images
         run: |
