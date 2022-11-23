@@ -19,10 +19,53 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
   npm install
 ```
 
-3. Por último, rode o comando **npm run compose:up** para rodar o projeto via docker e acesse o projeto via browser, no caminho `http://localhost:3000/`.
+3. Crie as variáveis de ambiente nos diretórios raiz do projeto e backend conforme a explicação do próximo tópico.
+```javascript
+  touch .env
+```
+
+4. Por último, rode o comando **npm run compose:up** para rodar o projeto via docker e acesse o projeto via browser, no caminho `http://localhost:3000/`.
 ```javascript
   npm run compose:up
 ```
+
+## Variavéis de ambiente
+
+Nos diretórios raiz, frontend e backend crie um arquivo .env com base nos dados abaixo:
+
+### Diretório Raiz
+```javascript
+  DATABASE_URL="postgresql://{username}:{password}@postgres:5432/digital_wallet?schema=public"
+  DB_USER=your_postgresql_user_here
+  DB_PASSWORD=your_postgresql_user_here
+  REACT_APP_HOSTNAME=localhost
+  REACT_APP_BACKEND_PORT=3001
+```
+
+Troque em DATABASE_URL {username} pelo seu usuário do PostgreSQL e em {password} pela sua senha do PostgreSQL.
+<br/>
+Observação: remover os chaves({}) também desta linha.
+<br/>
+Troque o valor de DB_USER pelo valor que você utilizou em {username} em DATABASE_URL.
+<br/>
+Troque o valor de DB_PASSWORD pelo valor que você utilizou em {password} em DATABASE_URL.
+<br/>
+As variáveis **REACT_APP_HOSTNAME** e **REACT_APP_BACKEND_PORT** você pode manter os dados conforme o arquivo .env.example. Caso sinta necessidade de mudar algum dos valores, lembre-se que esses valores correspondem à porta do backend e o hostname do mesmo.
+<br/>
+
+### Diretório Backend
+```javascript
+  DATABASE_URL="postgresql://{username}:{password}@localhost:5432/digital_wallet?schema=public"
+  PORT=3001
+  JWT_SECRET=MySpecialSecret
+```
+Troque em DATABASE_URL {username} pelo seu usuário do PostgreSQL e em {password} pela sua senha do PostgreSQL.
+<br/>
+Observação: remover os chaves({}) também desta linha.
+<br/>
+Troque o valor de JWT_SECRET pelo valor que lhe trouxer mais segurança pois ele será necessário para gerar o token através do login.
+<br/>
+E o valor de PORT é o valor onde a aplicação irá rodar localmente. Neste valor da variável de ambiente a aplicação irá rodar no caminho `http://localhost:3001`.
 
 ---
 
