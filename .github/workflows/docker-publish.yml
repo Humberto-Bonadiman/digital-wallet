@@ -11,14 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Create DB_USER for .env file'
+      - name: 'Create .env file'
         run: |
-          echo "${{ secrets.DB_USER }}" > .env
-      - uses: actions/checkout@v3
-      
-      - name: 'Create DB_PASSWORD for .env file'
-        run: |
-          echo "${{ secrets.DB_PASSWORD }}" > .env
+          echo "${{ secrets.ENV_FILE }}" > .env
       - uses: actions/checkout@v3
 
       - name: Docker Login
