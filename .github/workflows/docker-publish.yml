@@ -16,7 +16,7 @@ jobs:
         run: |
           touch .env
           echo "${{ secrets.ENV_FILE }}" > .env
-          echo "${{ secrets.ENV_BACKEND }}" > backend/.env
+          echo "${{ secrets.ENV_BACKEND }}" > .env
       - uses: actions/checkout@v3
 
       - name: Docker Login
