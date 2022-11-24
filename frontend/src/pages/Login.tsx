@@ -1,4 +1,3 @@
-// @ts-check
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
