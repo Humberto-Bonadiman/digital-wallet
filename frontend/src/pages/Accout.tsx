@@ -175,6 +175,9 @@ const Account: React.FC = () => {
       const value = localStorage.getItem('username') || '';
       const substringValue = value.substring(1, value.length - 1);
       const result = await fetchFindUserByUsername(substringValue);
+      setTimeout(() => {
+        navigate('/account');
+      }, 1000);
       const body = await result.json();
       if (body.accountId) {
         dispatch(alterUser(body));
@@ -189,8 +192,12 @@ const Account: React.FC = () => {
         }
       }
     };
-    getUser();
-    getAllUserTransactions();
+    setTimeout(() => {
+      getUser();
+      getAllUserTransactions();
+    }, 1000);
+    // getUser();
+    //getAllUserTransactions();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, token]);
 

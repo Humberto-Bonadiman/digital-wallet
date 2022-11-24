@@ -33,7 +33,9 @@ const Login = () => {
       dispatch(alterToken(body?.token));
       localStorage.setItem('token', JSON.stringify(body?.token));
       localStorage.setItem('username', JSON.stringify(username));
-      navigate('/account');
+      setTimeout(() => {
+        navigate('/account');
+      }, 1000);
     }
     if (result.status !== POST) {
       setError(true);

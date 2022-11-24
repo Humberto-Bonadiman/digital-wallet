@@ -32,25 +32,24 @@ const beginAccountTest = () => {
       body: login
     }).as('login');
     cy.get('[data-testid="login__button-login"]').click();
+
     cy.url().should('include', 'http://localhost:3000/account');
-  });
-  cy.fixture('username').then(function() {
+
     cy.intercept('POST', reqValueUsername, {
       statusCode: 200,
       body: username
     }).as('username');
-  });
-  cy.fixture('transactions').then(function() {
+
     cy.intercept('GET', reqValueTransactions, {
       statusCode: 200,
       body: transactions
     }).as('transactions');
-  });
-  cy.fixture('findAccount').then(function() {
+
     cy.intercept('GET', reqValueAccount, {
       statusCode: 200,
       body: findAccount
     }).as('findAccount');
+    cy.wait('@findAccount')
   });
 }
 

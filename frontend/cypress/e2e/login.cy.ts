@@ -1,4 +1,8 @@
 import "cypress-localstorage-commands";
+import login from '../fixtures/login.json';
+import username from '../fixtures/username.json';
+import transactions from '../fixtures/transactions.json';
+import findAccount from '../fixtures/findAccount.json';
 
 const NUMBER = 3001;
 const PORT = process.env.REACT_APP_BACKEND_PORT || NUMBER;
@@ -28,29 +32,21 @@ describe('Test login page', () => {
     cy.get('[data-testid="login__input-username"]').type('bob@email.com');
     cy.get('[data-testid="login__input-password"]').type('Abcdefg1');
     
-    cy.fixture('login').then(function(login) {
+    cy.fixture('login').then(function() {
       cy.intercept('POST', reqValueLogin, {
         statusCode: 200,
         body: login
       }).as('login');
       cy.get('[data-testid="login__button-login"]').click();
       cy.url().should('include', 'http://localhost:3000/account');
-    });
-    cy.fixture('username').then(function(username) {
       cy.intercept('POST', reqValueUsername, {
         statusCode: 200,
         body: username
       }).as('username');
-      cy.wait('@username', {timeout: 5000});
-    });
-    cy.fixture('transactions').then(function(transactions) {
       cy.intercept('GET', reqValueTransactions, {
         statusCode: 200,
         body: transactions
       }).as('transactions');
-      cy.wait('@transactions', {timeout: 5000});
-    });
-    cy.fixture('findAccount').then(function(findAccount) {
       cy.intercept('GET', reqValueAccount, {
         statusCode: 200,
         body: findAccount

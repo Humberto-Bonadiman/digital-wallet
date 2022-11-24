@@ -14,9 +14,13 @@ describe('Test register page', () => {
         win.localStorage.clear();
       },
     });
+    
     cy.get('[data-testid="register__label-username"]').should('have.text', 'Username');
+    cy.get('[data-testid="register__input-username"]').click();
     cy.get('[data-testid="register__input-username"]').type('jacobTestRegister@email.com');
+
     cy.get('[data-testid="register__label-password"]').should('have.text', 'Senha');
+    cy.get('[data-testid="register__input-password"]').click();
     cy.get('[data-testid="register__input-password"]').type('1234567A');
     cy.fixture('userCreated').then(function() {
       cy.intercept('POST', reqValueUser, {

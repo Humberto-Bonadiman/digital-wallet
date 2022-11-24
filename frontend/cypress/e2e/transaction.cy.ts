@@ -13,6 +13,7 @@ const reqValueAccount = `http://${URL}:${PORT}/accounts/1000001`;
 describe('Test transaction page', () => {
   it('if contains correct data', () => {
     beginAccountTest();
+    cy.wait(5000);
     cy.get('[data-testid="account__button-navigate"]').should('have.text', 'Realizar Transferência');
     cy.get('[data-testid="account__button-navigate"]').click();
     cy.url().should('include', 'http://localhost:3000/transaction');
@@ -21,10 +22,13 @@ describe('Test transaction page', () => {
     cy.get('[data-testid="transaction__label-value"]')
       .should('have.text', 'Valor Transferência');
     cy.get('[data-testid="transaction__username"]').type('alice@email.com');
-    cy.get('[data-testid="transaction__value"]').type('5,00');
+    cy.get('#transaction__value').click();
+    cy.get('#transaction__value').type('5,00');
+    
     cy.get('[data-testid="transaction__button-tranfer"]').click();
     cy.get('[data-testid="transaction-confirm"]').should('have.text', 'Sim');
     cy.get('[data-testid="transaction-deny"]').should('have.text', 'Não');
+
     cy.fixture('createTransaction').then(function() {
       cy.intercept('POST', reqCreateTransaction, {
         statusCode: 201,

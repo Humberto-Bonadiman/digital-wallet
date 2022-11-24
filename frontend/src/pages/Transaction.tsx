@@ -114,12 +114,14 @@ const Transaction = () => {
             step="0.01"
             min="0"
             data-testid="transaction__value"
+            id="transaction__value"
             placeholder="Valor em reais (R$)"
             onChange={ ({ target }) => setValue(Number(target.value)) }
           />
         </Form.Group>
         <Button
           data-testid="transaction__button-tranfer"
+          id="transaction__button-tranfer"
           variant="primary"
           type="submit"
           onClick={ submit }
