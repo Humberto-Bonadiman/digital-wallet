@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: 'Create .env file'
         run: |
+          touch .env
           echo "${{ secrets.ENV_FILE }}" > .env
+          echo "${{ secrets.ENV_BACKEND }}" > .env
       - uses: actions/checkout@v3
 
       - name: Docker Login
@@ -30,12 +33,15 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Docker Compose Build
-        working-directory: .
-        run: docker-compose build
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        
+        working-directory: .
+        run: |
+          touch .env
+          echo POSTGRES_USER=${{ secrets.DB_USER }}
+          echo POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }}
+          docker-compose build        
 
       - name: Build and push Docker images
         run: |
