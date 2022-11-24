@@ -11,6 +11,7 @@ userRouter
     '/login',
     validateUser.verifyIfEmpty,
     validateUser.verifyHashPassword,
+    validateUser.userNotCreated,
     userController.login
   ).post(
     '/username',

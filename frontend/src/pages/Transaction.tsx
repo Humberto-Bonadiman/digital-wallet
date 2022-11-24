@@ -8,6 +8,7 @@ import { useAppSelector } from '../app/hooks';
 import { selectToken } from '../features/token/tokenSlice';
 import { selectUser } from '../features/user/userSlice';
 import { fetchTransaction } from '../services/fetchApi';
+import checkErrors from '../services/checkErrors';
 import '../styles/transaction.css';
 
 const Transaction = () => {
@@ -18,32 +19,6 @@ const Transaction = () => {
   const [value, setValue] = useState(0);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
-
-  const checkError = (message: string) => {
-    const tokenNotFound = 'Token not found';
-    const invalidToken = 'Expired or invalid token';
-    const usernameRequired = '"debitedUsername" and "creditedUsername" are required';
-    const usernameEqual = '"debitedUsername" and "creditedUsername" cannot be equals';
-    const userRegistered = 'All users must be registered';
-    const valueBeyond = 'It is not possible to transfer beyond the balance';
-    const valueRequired = '"value" is required';
-    if (message === tokenNotFound) {
-      return 'Token não encontrado!';
-    }
-    if (message === invalidToken) {
-      return 'Token inválido!';
-    }
-    if (message === usernameRequired || message === usernameEqual) {
-      return 'Username da conta recebedora está inválido!';
-    }
-    if (message === userRegistered) {
-      return 'Usuário não registrado!';
-    }
-    if (message === valueBeyond) {
-      return 'Não é possível transferir além do saldo!';
-    }
-    if (message === valueRequired) return 'O valor é obrigatório!';
-  }
 
   const generateTransaction = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -59,7 +34,7 @@ const Transaction = () => {
       setError(true);
       const getResult = await result.json();
       console.log(getResult);
-      const messageError = checkError(getResult.message) || '';
+      const messageError = checkErrors(getResult.message) || '';
       setMessage(messageError);
     }
   }

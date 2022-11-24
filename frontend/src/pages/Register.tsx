@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchCreateUser } from '../services/fetchApi';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
+import checkErrors from '../services/checkErrors';
 import '../styles/register.css';
 
 const Register = () => {
@@ -17,21 +18,6 @@ const Register = () => {
     return regexEmail.test(userEmail);
   };
 
-  const checkError = (message: string) => {
-    const validEmail = '"username" must be a valid email';
-    const validPassword = '"password" must contain at least one number and one uppercase letter';
-    const userRegistered = 'User already registered';
-    if (message === validEmail) {
-      return 'Username precisa ser um e-mail válido!';
-    }
-    if (message === validPassword) {
-      return 'A senha precisa conter pelo menos um número e uma letra maiúscula!';
-    }
-    if (message === userRegistered) {
-      return 'Usuário já registrado!';
-    }
-  }
-
   const handleClick = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await fetchCreateUser(username, password);
@@ -42,7 +28,7 @@ const Register = () => {
       navigate('/login');
     }
     if (result.status !== STATUS_CODE_CREATED) {
-      const messageError = checkError(getResult.message) || '';
+      const messageError = checkErrors(getResult.message) || '';
       setMessage(messageError);
       setError(true);
     }

@@ -78,6 +78,26 @@ class ValidateUser {
     }
   }
 
+  public async userNotCreated(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username } = req.body;
+      await new PrismaClient().users.findUniqueOrThrow({
+        where: {
+          username
+        },
+        select: {
+          id: true,
+          username: true,
+          accountId: true
+        }
+      });
+
+      next();
+    } catch (err) {
+      return res.status(StatusCode.NOT_FOUND).json({ message: 'User not found' });
+    }
+  }
+
   public async tokenValidation(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.headers.authorization;
