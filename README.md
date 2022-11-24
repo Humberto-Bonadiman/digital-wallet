@@ -117,3 +117,34 @@ Link: https://tableplus.com/blog/2018/10/how-to-start-stop-restart-postgresql-se
 ```
 
 Após isso é só rodar a sua aplicação backend novamente.
+
+## Testes
+
+### Backend
+
+Para rodar os testes utilizados no backend basta digitar os comandos abaixo a partir da pasta raiz do projeto:
+```javascript
+  cd backend
+  npm run test
+```
+
+### Frontend
+Para rodar os tests utilizados no frontend é indicado abrir três abas do terminal
+
+1. Na primeira aba digitar os seguintes comandos a partir da pasta raiz do projeto:
+```javascript
+  cd backend
+  npm run start
+```
+
+2. Na segunda aba digitar os seguintes comandos a partir da pasta raiz do projeto:
+```javascript
+  cd frontend
+  npm run start
+```
+
+3. Na terceira aba digitar os seguintes comandos a partir da pasta raiz do projeto:
+```javascript
+  cd frontend
+  npm run cy:run
+```
