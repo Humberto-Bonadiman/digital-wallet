@@ -138,7 +138,7 @@ describe('26 - Update user password', () => {
   });
 });
 
-describe('26 - Delete a user by Id', () => {
+describe('27 - Delete a user by Id', () => {
   let chaiHttpResponse;
   describe('when delete a user by id successfully', () => {
     let deleteUser: sinon.SinonStub;
